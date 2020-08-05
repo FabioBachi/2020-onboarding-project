@@ -1,0 +1,16 @@
+@import './variables';
+
+body {
+  background-color: $secondaryColor;
+  font-family: Calibri, Arial;
+  margin: 0;
+}
+#container {
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 20px;
+  width: 100%;
+}
+
+@import 'components/filters.scss';
+@import 'components/header.scss';

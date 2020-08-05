@@ -1,0 +1,21 @@
+#header {
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 15px 0 35px;
+
+  h1 {
+    color: $primaryColor;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    color: $lightGrey;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+}

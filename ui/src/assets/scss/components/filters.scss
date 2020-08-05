@@ -1,0 +1,57 @@
+#filters {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 35px;
+
+  .sort {
+    border-left: 1px solid $lightGrey;
+    flex-basis: 150px;
+    flex-shrink: 0;
+    margin-left: 20px;
+    padding: 10px 0 10px 20px;
+  }
+  .filter-label {
+    color: white;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  .genres-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 6px;
+
+    .genre-button {
+      background-color: transparent;
+      border: 1px solid white;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 5px 10px;
+      margin: 0 5px 5px 0;
+      transition: border-color 0.2s;
+
+      &:focus {
+        outline: 0;
+      }
+      &:hover {
+        border-color: $primaryColor;
+      }
+      &.selected {
+        background-color: $primaryColor;
+        border-color: $primaryColor;
+      }
+    }
+  }
+  select {
+    background-color: transparent;
+    border: none;
+    color: $primaryColor;
+    font-size: 18px;
+    padding: 5px 0;
+    margin: 0 0 0 -4px;
+    width: 100%;
+  }
+}
