@@ -4,6 +4,9 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+  watchOptions: {
+    ignored: /node_modules/,
+  },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     compress: true,
@@ -41,7 +44,7 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
     ],
   },

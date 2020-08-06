@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GenreButton from '../GenreButton';
+import GenreButton from '../layout/GenreButton';
 
 export default () => {
   const onToggleGenre: Function = (id: number): void => {
