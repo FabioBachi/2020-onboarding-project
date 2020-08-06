@@ -4,12 +4,12 @@ import GenreButton from '../layout/GenreButton';
 
 interface Props {
   genres: Genre[];
-  selectedGenres: number[];
+  selectedGenres?: number[];
 }
 
 const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
   const onToggleGenre: Function = (id: number): void => {
-    console.log(id);
+    window.dispatchEvent(new CustomEvent('onToggleGenre', { detail: { id } }));
   };
 
   return (
@@ -24,7 +24,10 @@ const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
                 id={genre.id}
                 key={`genre-${genre.id}`}
                 onToggleGenre={onToggleGenre}
-                selected={selectedGenres.indexOf(genre.id) >= 0}
+                selected={
+                  selectedGenres !== undefined &&
+                  selectedGenres.indexOf(genre.id) >= 0
+                }
                 title={genre.title}
               />
             ))}
@@ -36,5 +39,7 @@ const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
     </div>
   );
 };
+
+Genres.defaultProps = { selectedGenres: [] };
 
 export default Genres;

@@ -1,29 +1,29 @@
 import React from 'react';
 
 interface Props {
-  selectedSorting: string;
+  onChangeSorting: (event: React.FormEvent<HTMLSelectElement>) => void;
+  selectedSorting?: string;
 }
 
-const Sort: React.SFC<Props> = ({ selectedSorting }: Props) => (
+const Sort: React.SFC<Props> = ({
+  onChangeSorting,
+  selectedSorting,
+}: Props) => (
   <div className="sort">
     <label htmlFor="sort">
       <div className="filter-label">Sort by</div>
-      <select name="sorting">
-        <option
-          value="popularity"
-          selected={!selectedSorting || selectedSorting === 'popularity'}
-        >
-          Popularity
-        </option>
-        <option
-          value="release_date"
-          selected={selectedSorting === 'releaseDate'}
-        >
-          Release date
-        </option>
+      <select
+        name="sorting"
+        onChange={onChangeSorting}
+        value={selectedSorting || 'popularity'}
+      >
+        <option value="popularity">Popularity</option>
+        <option value="releaseDate">Release date</option>
       </select>
     </label>
   </div>
 );
+
+Sort.defaultProps = { selectedSorting: undefined };
 
 export default Sort;
