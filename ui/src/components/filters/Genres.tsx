@@ -22,6 +22,7 @@ const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
             {genres.map((genre) => (
               <GenreButton
                 id={genre.id}
+                key={`genre-${genre.id}`}
                 onToggleGenre={onToggleGenre}
                 selected={selectedGenres.indexOf(genre.id) >= 0}
                 title={genre.title}
