@@ -12,6 +12,15 @@ body {
   padding: 20px;
   width: 100%;
 }
+.loading,
+.no-items {
+  color: white;
+  font-size: 15px;
+  text-align: center;
+}
+.loading {
+  color: $primaryColor;
+}
 
 @import 'components/filters.scss';
 @import 'components/header.scss';

@@ -13,7 +13,7 @@ const Movies: React.SFC<Props> = ({ movies }: Props) => {
       ))}
     </ul>
   ) : (
-    <div>No movies found.</div>
+    <div className="no-items">No movies found.</div>
   );
 };
 

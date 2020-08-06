@@ -1,12 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const GenreButton: React.SFC<GenreButton> = ({
+interface GenreButton {
+  onToggleGenre: Function;
+  selected: boolean;
+}
+
+type Props = Genre & GenreButton;
+
+const GenreButton: React.SFC<Props> = ({
   id,
   onToggleGenre,
   selected,
   title,
-}: GenreButton) => (
+}: Props) => (
   <button
     type="button"
     onClick={() => onToggleGenre(id)}

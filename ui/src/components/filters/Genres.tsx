@@ -2,232 +2,38 @@ import React from 'react';
 
 import GenreButton from '../layout/GenreButton';
 
-export default () => {
+interface Props {
+  genres: Genre[];
+  selectedGenres: number[];
+}
+
+const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
   const onToggleGenre: Function = (id: number): void => {
     console.log(id);
   };
 
   return (
     <div className="genres">
-      <div className="filter-label">Select genres</div>
-      <div className="genres-list">
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
+      {genres && genres.length ? (
+        <>
+          <div className="filter-label">Select genres</div>
 
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Action"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Adventure"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Animation"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Horror"
-        />
-        <GenreButton
-          id={1}
-          onToggleGenre={onToggleGenre}
-          selected={false}
-          title="Science Fiction"
-        />
-      </div>
+          <div className="genres-list">
+            {genres.map((genre) => (
+              <GenreButton
+                id={genre.id}
+                onToggleGenre={onToggleGenre}
+                selected={selectedGenres.indexOf(genre.id) >= 0}
+                title={genre.title}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="no-items">No movie genres found.</div>
+      )}
     </div>
   );
 };
+
+export default Genres;

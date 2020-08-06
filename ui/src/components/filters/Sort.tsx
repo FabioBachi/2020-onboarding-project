@@ -1,13 +1,29 @@
 import React from 'react';
 
-export default () => (
+interface Props {
+  selectedSorting: string;
+}
+
+const Sort: React.SFC<Props> = ({ selectedSorting }: Props) => (
   <div className="sort">
     <label htmlFor="sort">
       <div className="filter-label">Sort by</div>
-      <select name="sorty">
-        <option value="popularity.desc">Popularity</option>
-        <option value="release_date.desc">Release date</option>
+      <select name="sorting">
+        <option
+          value="popularity"
+          selected={!selectedSorting || selectedSorting === 'popularity'}
+        >
+          Popularity
+        </option>
+        <option
+          value="release_date"
+          selected={selectedSorting === 'releaseDate'}
+        >
+          Release date
+        </option>
       </select>
     </label>
   </div>
 );
+
+export default Sort;
