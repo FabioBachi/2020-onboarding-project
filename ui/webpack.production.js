@@ -1,23 +1,10 @@
 const path = require('path');
+const config = require('./webpack.config');
 
 module.exports = {
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.scss'],
-  },
-  watchOptions: {
-    ignored: /node_modules/,
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    compress: true,
-    port: 3000,
-  },
-  entry: path.resolve(__dirname, 'src', 'index.tsx'),
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js',
-    libraryTarget: 'umd',
-  },
+  ...config,
+  entry: path.resolve(__dirname, 'src', 'index.production.js'),
+  output: { ...config.output, libraryTarget: 'amd' },
   module: {
     rules: [
       {
@@ -37,7 +24,7 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: ['to-string-loader', 'postcss-loader', 'sass-loader'],
       },
     ],
   },

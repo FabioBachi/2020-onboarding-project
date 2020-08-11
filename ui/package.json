@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production --config webpack.production.js",
     "dev": "webpack-dev-server --mode development --watch true",
     "test": "jest"
   },
@@ -64,6 +64,7 @@
     "sass-loader": "^9.0.3",
     "source-map-loader": "^1.0.1",
     "style-loader": "^1.2.1",
+    "to-string-loader": "^1.1.6",
     "ts-loader": "^8.0.2",
     "typescript": "^3.9.7",
     "webpack": "^4.44.1",

@@ -21,7 +21,7 @@ const MovieSuggestions: React.SFC<Props> = ({
   selectedGenres,
   selectedSorting,
 }: Props) => (
-  <div id="container">
+  <div id="movie-suggestion">
     <Header />
     <Filters
       genres={genres}
