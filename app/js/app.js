@@ -16,7 +16,7 @@ define(["underscore", "jquery", "collections/Genres", "views/home"], (
     },
   });
 
-  const homeView = new (HomeView(genres, []))({ el: $("#main") });
+  const homeView = new (HomeView())({ el: $("#main"), genres });
 
   return this;
 });
