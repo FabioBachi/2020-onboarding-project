@@ -1,8 +1,9 @@
 requirejs.config({
   paths: {
-    jquery: "../lib/jquery",
-    underscore: "../lib/underscore",
     backbone: "../lib/backbone",
+    jquery: "../lib/jquery",
+    localStorage: "../lib/backbone.localStorage",
+    underscore: "../lib/underscore",
   },
 });
 

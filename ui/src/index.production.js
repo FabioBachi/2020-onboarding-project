@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import retargetEvents from 'react-shadow-dom-retarget-events';
 import MovieSuggestion from './MovieSuggestion';
 import * as styles from './assets/scss/main.scss';
 
@@ -8,17 +7,24 @@ export default class MovieSuggestionElement extends HTMLElement {
   static get observedAttributes() {
     return [
       'genres',
-      'is-loading',
+      'loading',
       'movies',
-      'selectedGenres',
-      'selectedSorting',
+      'selected-genres',
+      'selected-sorting',
     ];
   }
 
   attributeChangedCallback(param, oldValue, newValue) {
+    console.log('param change: ', param);
     switch (param) {
       case 'genres':
         this[param] = JSON.parse(newValue);
+        break;
+      case 'selected-genres':
+        this.selectedGenres = JSON.parse(newValue);
+        break;
+      case 'selected-sorting':
+        this.selectedSorting = newValue;
         break;
       default:
         this[param] = newValue;
@@ -36,22 +42,31 @@ export default class MovieSuggestionElement extends HTMLElement {
     shadowRoot.appendChild(mountPoint);
     shadowRoot.appendChild(style);
 
+    console.log('new react params: ', {
+      genres: this.genres || [],
+      loading: this.loading,
+      movies: this.movies || [],
+      selectedGenres: this.selectedGenres || [],
+      selectedSorting: this.selectedSorting || 'popularity',
+    });
+
+    Object.defineProperty(mountPoint, 'ownerDocument', { value: shadowRoot });
+    shadowRoot.createElement = (...args) => document.createElement(...args);
+
     ReactDOM.render(
       React.createElement(
         MovieSuggestion,
         {
           genres: this.genres || [],
           loading: this.loading,
-          movies: [],
-          selectedGenres: [],
-          selectedSorting: 'popularity',
+          movies: this.movies || [],
+          selectedGenres: this.selectedGenres || [],
+          selectedSorting: this.selectedSorting || 'popularity',
         },
         React.createElement('slot')
       ),
       mountPoint
     );
-
-    retargetEvents(shadowRoot);
   }
 
   get loading() {

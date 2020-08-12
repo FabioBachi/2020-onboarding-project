@@ -1,22 +1,35 @@
-define(["underscore", "jquery", "collections/Genres", "views/home"], (
-  _,
-  $,
-  Genres,
-  HomeView,
-  q
-) => {
+define([
+  "underscore",
+  "jquery",
+  "collections/Genres",
+  "views/home",
+  "collections/SelectedGenres",
+], (_, $, Genres, HomeView, SelectedGenres) => {
   const genres = new Genres();
+  const selectedGenres = new SelectedGenres();
 
-  genres.fetch({
-    success: (collection, response, options) => {
-      console.log(collection.toJSON());
-    },
-    error: (a, b, c) => {
-      console.log((a, b, c));
-    },
+  genres.fetch();
+  selectedGenres.fetch();
+
+  const homeView = new (HomeView())({ el: $("#main"), genres, selectedGenres });
+
+  window.addEventListener("onToggleGenre", (event) => {
+    const genre = selectedGenres.findWhere({ id: event.detail.genre.id });
+
+    if (!genre) {
+      selectedGenres.create(event.detail.genre);
+    } else {
+      genre.destroy();
+    }
   });
 
-  const homeView = new (HomeView())({ el: $("#main"), genres });
+  window.addEventListener("onChangeSorting", (event) => {
+    const sortBy = event.detail.sortBy;
+    window.localStorage.setItem("sortBy", sortBy);
+    console.log(sortBy);
+
+    homeView.render();
+  });
 
   return this;
 });
