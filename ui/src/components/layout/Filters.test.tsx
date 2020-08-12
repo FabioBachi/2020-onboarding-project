@@ -9,7 +9,7 @@ it('should render correctly', () => {
         genres={[
           {
             id: 1,
-            title: 'Adventure',
+            name: 'Adventure',
           },
         ]}
       />

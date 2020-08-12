@@ -2,4 +2,4 @@
 **/babel.config.js
 **/postcss.config.js
 **/setupTests.ts
-**/*.test.*
+*.test.*

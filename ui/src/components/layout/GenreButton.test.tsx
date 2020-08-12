@@ -7,11 +7,10 @@ it('should dispatch onClick', () => {
 
   const wrapper = shallow(
     <GenreButton
-      id={1}
-      key={'genre-1'}
+      genre={{ id: 1, name: 'Genre name' }}
+      key="genre-1"
       onToggleGenre={onToggleGenre}
       selected
-      title={'Genre title'}
     />
   );
 
@@ -20,32 +19,30 @@ it('should dispatch onClick', () => {
   expect(onToggleGenre).toBeCalled();
 });
 
-it('should match genre title', () => {
-  const genreTitle = 'Science Fiction';
+it('should match genre name', () => {
+  const genreName = 'Science Fiction';
 
   const wrapper = shallow(
     <GenreButton
-      id={1}
-      key={'genre-1'}
+      genre={{ id: 1, name: genreName }}
+      key="genre-1"
       onToggleGenre={() => {}}
       selected
-      title={genreTitle}
     />
   );
 
-  expect(wrapper.find('button.genre-button').text()).toBe(genreTitle);
+  expect(wrapper.find('button.genre-button').text()).toBe(genreName);
 });
 
 it('should have "selected" css class', () => {
-  const genreTitle = 'Science Fiction';
+  const genreName = 'Science Fiction';
 
   const wrapper = shallow(
     <GenreButton
-      id={1}
-      key={'genre-1'}
+      genre={{ id: 1, name: genreName }}
+      key="genre-1"
       onToggleGenre={() => {}}
       selected
-      title={genreTitle}
     />
   );
 

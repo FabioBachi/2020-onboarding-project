@@ -1,4 +1,4 @@
 interface Genre {
   id: number;
-  title: string;
+  name: string;
 }

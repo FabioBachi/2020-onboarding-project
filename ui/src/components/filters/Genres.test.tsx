@@ -9,15 +9,15 @@ it('should have 3 selectable genres', () => {
       genres={[
         {
           id: 1,
-          title: 'Adventure',
+          name: 'Adventure',
         },
         {
           id: 2,
-          title: 'Horror',
+          name: 'Horror',
         },
         {
           id: 3,
-          title: 'Science Fiction',
+          name: 'Science Fiction',
         },
       ]}
       selectedGenres={[]}

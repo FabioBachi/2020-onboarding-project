@@ -8,8 +8,10 @@ interface Props {
 }
 
 const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
-  const onToggleGenre: Function = (id: number): void => {
-    window.dispatchEvent(new CustomEvent('onToggleGenre', { detail: { id } }));
+  const onToggleGenre: Function = (genre: Genre): void => {
+    window.dispatchEvent(
+      new CustomEvent('onToggleGenre', { detail: { genre } })
+    );
   };
 
   return (
@@ -21,14 +23,13 @@ const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
           <div className="genres-list">
             {genres.map((genre) => (
               <GenreButton
-                id={genre.id}
+                genre={genre}
                 key={`genre-${genre.id}`}
                 onToggleGenre={onToggleGenre}
                 selected={
                   selectedGenres !== undefined &&
                   selectedGenres.indexOf(genre.id) >= 0
                 }
-                title={genre.title}
               />
             ))}
           </div>

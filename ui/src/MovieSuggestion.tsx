@@ -8,14 +8,14 @@ import MoviesList from './components/movies/MoviesList';
 
 interface Props {
   genres: Genre[];
-  isLoading: boolean;
+  loading: boolean;
   movies: Movie[];
   selectedGenres: number[];
   selectedSorting: string;
 }
 
 const MovieSuggestions: React.SFC<Props> = ({
-  isLoading,
+  loading,
   genres,
   movies,
   selectedGenres,
@@ -28,7 +28,7 @@ const MovieSuggestions: React.SFC<Props> = ({
       selectedGenres={selectedGenres}
       selectedSorting={selectedSorting}
     />
-    {!isLoading ? (
+    {!loading ? (
       <MoviesList movies={movies} />
     ) : (
       <div className="loading">Loading ...</div>
