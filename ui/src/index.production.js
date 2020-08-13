@@ -42,14 +42,6 @@ export default class MovieSuggestionElement extends HTMLElement {
     shadowRoot.appendChild(mountPoint);
     shadowRoot.appendChild(style);
 
-    console.log('new react params: ', {
-      genres: this.genres || [],
-      loading: this.loading,
-      movies: this.movies || [],
-      selectedGenres: this.selectedGenres || [],
-      selectedSorting: this.selectedSorting || 'voteAverage',
-    });
-
     Object.defineProperty(mountPoint, 'ownerDocument', { value: shadowRoot });
     shadowRoot.createElement = (...args) => document.createElement(...args);
 
