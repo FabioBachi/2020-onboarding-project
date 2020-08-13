@@ -1,42 +1,91 @@
-define(["underscore", "backbone", "../../../ui/public/bundle"], (
+define([
+  "underscore",
+  "backbone",
+  "moment",
+  "tpl!../../templates/home.tpl",
+  "../../../ui/public/bundle",
+  "collections/Genres",
+  "collections/Movies",
+  "utils/strings",
+], (
   _,
   Backbone,
-  movieSuggestionElement
+  moment,
+  homeTpl,
+  movieSuggestionElement,
+  Genres,
+  Movies,
+  stringUtils
 ) => {
-  return () => {
+  return (selectedGenres) => {
+    const genres = new Genres();
+    const movies = new Movies();
+
+    genres.fetch({ reset: true });
+    selectedGenres.fetch();
+
     const HomeView = Backbone.View.extend({
-      genres: null,
-      selectedGenres: null,
+      loading: true,
+
+      genres,
+      selectedGenres,
 
       tagName: "div",
 
-      initialize: function (options) {
-        this.genres = options.genres;
-        this.selectedGenres = options.selectedGenres;
-
+      initialize: function () {
         _.bindAll(this, "render");
+        _.bindAll(this, "searchMovies");
 
-        this.genres.bind("reset", this.render);
-        this.genres.bind("add", this.render);
-        this.genres.bind("remove", this.render);
+        this.genres.bind("reset", this.searchMovies);
 
-        this.selectedGenres.bind("reset", this.render);
-        this.selectedGenres.bind("add", this.render);
-        this.selectedGenres.bind("remove", this.render);
+        this.selectedGenres.bind("reset", this.searchMovies);
+        this.selectedGenres.bind("add", this.searchMovies);
+        this.selectedGenres.bind("remove", this.searchMovies);
+      },
+
+      searchMovies: function () {
+        this.loading = true;
+        this.render();
+
+        const genres = this.selectedGenres
+          .toJSON()
+          .map((genre) => genre.id)
+          .join(",");
+        let sortBy = window.localStorage.getItem("sortBy") || "voteAverage";
+        sortBy =
+          sortBy === "releaseDate" ? "release_date.desc" : "vote_average.desc";
+
+        const params = [
+          `sort_by=${sortBy}`,
+          `with_genres=${genres}`,
+          `primary_release_date.lte=${moment().format("YYYY-MM-DD")}`,
+          `vote_count.gte=500`,
+        ];
+        movies.url = `${movies.baseUrl}&${params.join("&")}`;
+
+        movies.fetch({
+          complete: () => {
+            this.loading = false;
+            this.render();
+          },
+        });
       },
 
       render: function () {
-        console.log("render");
-
         this.$el.html(
-          `<movie-suggestion
-            genres='${JSON.stringify(this.genres.toJSON())}'
-            loading
-            selected-genres='${JSON.stringify(
-              this.selectedGenres.toJSON().map((genre) => genre.id)
-            )}'
-            selected-sorting='${window.localStorage.getItem("sortBy")}'
-          />`
+          homeTpl({
+            genres: stringUtils.escapeHtml(
+              JSON.stringify(this.genres.toJSON())
+            ),
+            loading: this.loading ? "loading" : "",
+            movies: stringUtils.escapeHtml(JSON.stringify(movies.toJSON())),
+            selectedGenres: stringUtils.escapeHtml(
+              JSON.stringify(
+                this.selectedGenres.toJSON().map((genre) => genre.id)
+              )
+            ),
+            selectedSorting: window.localStorage.getItem("sortBy"),
+          })
         );
       },
     });

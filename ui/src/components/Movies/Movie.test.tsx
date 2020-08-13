@@ -9,14 +9,14 @@ it('should match movie title', () => {
     <Movie
       movie={{
         id: 1,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
         title: movieTitle,
         url: 'https://www.themoviedb.org/movie/335984',
       }}
-      key={'movie-1'}
+      key="movie-1"
     />
   );
 

@@ -23,7 +23,7 @@ render(
     movies={[
       {
         id: 1,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -32,7 +32,7 @@ render(
       },
       {
         id: 2,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -41,7 +41,7 @@ render(
       },
       {
         id: 3,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -50,7 +50,7 @@ render(
       },
       {
         id: 4,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -59,7 +59,7 @@ render(
       },
       {
         id: 5,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -68,7 +68,7 @@ render(
       },
       {
         id: 6,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -77,7 +77,7 @@ render(
       },
       {
         id: 7,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -86,7 +86,7 @@ render(
       },
       {
         id: 8,
-        popularity: 45,
+        voteAverage: 45,
         posterPath:
           'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
         releaseDate: '12/03/2020',
@@ -95,7 +95,7 @@ render(
       },
     ]}
     selectedGenres={[1, 3]}
-    selectedSorting="popularity"
+    selectedSorting="voteAverage"
   />,
   document.getElementById('root')
 );

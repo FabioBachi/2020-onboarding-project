@@ -15,9 +15,9 @@ export default class MovieSuggestionElement extends HTMLElement {
   }
 
   attributeChangedCallback(param, oldValue, newValue) {
-    console.log('param change: ', param);
     switch (param) {
       case 'genres':
+      case 'movies':
         this[param] = JSON.parse(newValue);
         break;
       case 'selected-genres':
@@ -47,7 +47,7 @@ export default class MovieSuggestionElement extends HTMLElement {
       loading: this.loading,
       movies: this.movies || [],
       selectedGenres: this.selectedGenres || [],
-      selectedSorting: this.selectedSorting || 'popularity',
+      selectedSorting: this.selectedSorting || 'voteAverage',
     });
 
     Object.defineProperty(mountPoint, 'ownerDocument', { value: shadowRoot });
@@ -58,29 +58,17 @@ export default class MovieSuggestionElement extends HTMLElement {
         MovieSuggestion,
         {
           genres: this.genres || [],
-          loading: this.loading,
+          loading:
+            this.hasAttribute('loading') &&
+            this.getAttribute('loading') !== 'false',
           movies: this.movies || [],
           selectedGenres: this.selectedGenres || [],
-          selectedSorting: this.selectedSorting || 'popularity',
+          selectedSorting: this.selectedSorting || 'voteAverage',
         },
         React.createElement('slot')
       ),
       mountPoint
     );
-  }
-
-  get loading() {
-    return (
-      this.hasAttribute('loading') && this.getAttribute('loading') !== 'false'
-    );
-  }
-
-  set loading(newValue) {
-    if (newValue) {
-      this.setAttribute('loading', '');
-    } else {
-      this.removeAttribute('loading');
-    }
   }
 }
 

@@ -1,5 +1,5 @@
 #movies-list {
-  align-items: flex-start;
+  align-items: stretch;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -11,6 +11,9 @@
     background-color: $darkGrey;
     border-radius: 5px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 0 0 20px;
     overflow: hidden;
     padding: 0;

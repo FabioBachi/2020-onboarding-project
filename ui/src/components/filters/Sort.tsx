@@ -15,9 +15,9 @@ const Sort: React.SFC<Props> = ({
       <select
         name="sorting"
         onChange={onChangeSorting}
-        value={selectedSorting || 'popularity'}
+        value={selectedSorting || 'voteAverage'}
       >
-        <option value="popularity">Popularity</option>
+        <option value="voteAverage">Vote average</option>
         <option value="releaseDate">Release date</option>
       </select>
     </label>

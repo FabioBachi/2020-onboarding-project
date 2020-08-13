@@ -9,7 +9,7 @@ it('should have 3 selectable genres', () => {
       movies={[
         {
           id: 1,
-          popularity: 45,
+          voteAverage: 45,
           posterPath:
             'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
           releaseDate: '12/03/2020',
@@ -18,7 +18,7 @@ it('should have 3 selectable genres', () => {
         },
         {
           id: 1,
-          popularity: 45,
+          voteAverage: 45,
           posterPath:
             'https://image.tmdb.org/t/p/w220_and_h330_face/jsMVRjLwKWN3gaiGd9pJUrxezsp.jpg',
           releaseDate: '12/03/2020',

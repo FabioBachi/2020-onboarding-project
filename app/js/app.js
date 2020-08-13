@@ -1,17 +1,11 @@
-define([
-  "underscore",
-  "jquery",
-  "collections/Genres",
-  "views/home",
-  "collections/SelectedGenres",
-], (_, $, Genres, HomeView, SelectedGenres) => {
-  const genres = new Genres();
+define(["underscore", "jquery", "views/home", "collections/SelectedGenres"], (
+  _,
+  $,
+  HomeView,
+  SelectedGenres
+) => {
   const selectedGenres = new SelectedGenres();
-
-  genres.fetch();
-  selectedGenres.fetch();
-
-  const homeView = new (HomeView())({ el: $("#main"), genres, selectedGenres });
+  const homeView = new (HomeView(selectedGenres))({ el: $("#main") });
 
   window.addEventListener("onToggleGenre", (event) => {
     const genre = selectedGenres.findWhere({ id: event.detail.genre.id });
@@ -28,7 +22,7 @@ define([
     window.localStorage.setItem("sortBy", sortBy);
     console.log(sortBy);
 
-    homeView.render();
+    homeView.searchMovies();
   });
 
   return this;
