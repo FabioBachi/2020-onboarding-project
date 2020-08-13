@@ -20,7 +20,6 @@ define(["underscore", "jquery", "views/home", "collections/SelectedGenres"], (
   window.addEventListener("onChangeSorting", (event) => {
     const sortBy = event.detail.sortBy;
     window.localStorage.setItem("sortBy", sortBy);
-    console.log(sortBy);
 
     homeView.searchMovies();
   });
