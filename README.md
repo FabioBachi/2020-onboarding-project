@@ -8,10 +8,13 @@ Technologies used in this project:
 - BackboneJS
 - Webpack
 - Grunt
+- Jest
+- Enzyme
+- SASS
 
 ## React Application
 
-First of all, inst all alldependencies
+First of all, install all dependencies
 
 ```sh
 $ cd ui
@@ -20,7 +23,7 @@ $ yarn install
 
 #### Development
 
-In order to run the React component in development node, run the following commands:
+In order to run the React component in development node, run the following command:
 
 ```sh
 $ yarn dev
@@ -36,7 +39,7 @@ $ yarn test
 
 #### Building for production
 
-When testing the Backbone application, you will need to first build the React component as an AMD module. For that, simply run:
+When testing the Backbone application, you will first need to build the React component as an AMD module. To do that, simply run:
 
 ```sh
 $ yarn build
@@ -46,7 +49,10 @@ This will generate a custom HTML element for further use in the Backbone app in 
 
 ## BackboneJS Application / Base App
 
-The entry point for the whole application is the BackboneJS app.
+This isthe entry point for the whole application is the BackboneJS app.
+
+#### Development
+
 To run in development mode, first build the React component (as explicited above) and then install `http-server` globally and run the `app/` folder:
 
 ```sh
