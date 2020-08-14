@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './assets/scss/main.scss';
 
@@ -15,25 +15,37 @@ interface Props {
 }
 
 const MovieSuggestions: React.SFC<Props> = ({
-  loading,
+  loading: loadingProps,
   genres,
-  movies,
+  movies: moviesProps,
   selectedGenres,
   selectedSorting,
-}: Props) => (
-  <div id="movie-suggestion">
-    <Header />
-    <Filters
-      genres={genres}
-      selectedGenres={selectedGenres}
-      selectedSorting={selectedSorting}
-    />
-    {!loading ? (
-      <MoviesList movies={movies} />
-    ) : (
-      <div className="loading">Loading ...</div>
-    )}
-  </div>
-);
+}: Props) => {
+  const [loading, setLoading] = useState(loadingProps);
+  const [movies, setMovies] = useState(moviesProps);
+
+  useEffect(() => {
+    window.addEventListener('onLoadMovies', (event: any) => {
+      setMovies(event.detail.movies);
+      setLoading(false);
+    });
+  }, []);
+
+  return (
+    <div id="movie-suggestion">
+      <Header />
+      <Filters
+        genres={genres}
+        selectedGenres={selectedGenres}
+        selectedSorting={selectedSorting}
+      />
+      {!loading ? (
+        <MoviesList movies={movies} />
+      ) : (
+        <div className="loading">Loading ...</div>
+      )}
+    </div>
+  );
+};
 
 export default MovieSuggestions;

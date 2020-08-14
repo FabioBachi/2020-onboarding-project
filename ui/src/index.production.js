@@ -42,6 +42,7 @@ export default class MovieSuggestionElement extends HTMLElement {
     shadowRoot.appendChild(mountPoint);
     shadowRoot.appendChild(style);
 
+    // Hack for event triggering correction
     Object.defineProperty(mountPoint, 'ownerDocument', { value: shadowRoot });
     shadowRoot.createElement = (...args) => document.createElement(...args);
 

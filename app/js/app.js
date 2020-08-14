@@ -24,5 +24,18 @@ define(["underscore", "jquery", "views/home", "collections/SelectedGenres"], (
     homeView.searchMovies();
   });
 
+  const onScroll = async () => {
+    if (
+      window.pageYOffset + window.innerHeight >
+      document.getElementById("main").offsetHeight - 500
+    ) {
+      window.removeEventListener("scroll", onScroll);
+      await homeView.paginate();
+      window.addEventListener("scroll", onScroll);
+    }
+  };
+
+  window.addEventListener("scroll", onScroll);
+
   return this;
 });
