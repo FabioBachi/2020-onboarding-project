@@ -93,7 +93,6 @@ define([
           complete: () => {
             this.loading = false;
             this.triggerMovieEvent();
-            resolve();
           },
         });
       },
