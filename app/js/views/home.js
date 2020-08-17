@@ -77,7 +77,7 @@ define([
         );
       },
 
-      searchMovies: async function () {
+      searchMovies: function () {
         this.loading = true;
         this.render();
 
@@ -86,17 +86,15 @@ define([
 
         movies.url = this.getFetchUrl();
 
-        await new Promise((resolve) => {
-          movies.fetch({
-            success: (response) => {
-              this.movies = response.toJSON();
-            },
-            complete: () => {
-              this.loading = false;
-              this.triggerMovieEvent();
-              resolve();
-            },
-          });
+        movies.fetch({
+          success: (response) => {
+            this.movies = response.toJSON();
+          },
+          complete: () => {
+            this.loading = false;
+            this.triggerMovieEvent();
+            resolve();
+          },
         });
       },
 
