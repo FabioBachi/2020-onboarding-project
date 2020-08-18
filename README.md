@@ -12,7 +12,40 @@ Technologies used in this project:
 - Enzyme
 - SASS
 
-## React Application
+# BackboneJS Application / Base App
+
+The entry point for the whole application is the BackboneJS app.
+
+#### Development
+
+To run in development mode, first build the Core Application and the React component (as explicited below), install `http-server` globally and then run in the `app/` folder:
+
+```sh
+yarn global add http-server
+cd app
+http-server
+```
+
+# Core Application
+
+This applications contains all API and Local Storage logic. It's built with Typescript, so you must build it before using it in the Backbone Application.
+
+```sh
+$ cd core
+$ yarn install
+$ yarn build
+```
+
+#### Testing
+
+When you need to run Jest automated tests, simply run:
+
+```sh
+$ cd core
+$ yarn test
+```
+
+# React Application
 
 First of all, install all dependencies
 
@@ -26,6 +59,7 @@ $ yarn install
 In order to run the React component in development node, run the following command:
 
 ```sh
+$ cd ui
 $ yarn dev
 ```
 
@@ -34,6 +68,7 @@ $ yarn dev
 When you need to run Jest automated tests, simply run:
 
 ```sh
+$ cd ui
 $ yarn test
 ```
 
@@ -42,21 +77,8 @@ $ yarn test
 When testing the Backbone application, you will first need to build the React component as an AMD module. To do that, simply run:
 
 ```sh
+$ cd ui
 $ yarn build
 ```
 
 This will generate a custom HTML element for further use in the Backbone app in the `ui/public/bundle.js` file.
-
-## BackboneJS Application / Base App
-
-This isthe entry point for the whole application is the BackboneJS app.
-
-#### Development
-
-To run in development mode, first build the React component (as explicited above) and then install `http-server` globally and run the `app/` folder:
-
-```sh
-yarn global add http-server
-cd app
-http-server
-```
