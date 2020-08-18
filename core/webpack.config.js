@@ -1,8 +1,10 @@
 const path = require("path");
 
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
+
 module.exports = {
   entry: "./src/index.ts",
-  devtool: "inline-source-map",
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -20,4 +22,5 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     libraryTarget: "amd",
   },
+  plugins: [new MomentLocalesPlugin()],
 };
