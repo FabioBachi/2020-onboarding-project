@@ -42,5 +42,5 @@ it("should fetch a movie list", async () => {
 
   const list = await movies.fetchMovies(true);
   expect(list.length).toBeGreaterThan(0);
-  expect(list[0].title).toBeDefined();
+  expect(list[0].title).toBe("Blade Runner 2049");
 });

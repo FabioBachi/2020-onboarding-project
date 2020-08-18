@@ -1,6 +1,27 @@
-import Genres from "./Genres";
+import axios from "axios";
 
+import Genres from "./Genres";
 const genres = new Genres();
+
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+it("should fetch a movie list", async () => {
+  mockedAxios.get.mockResolvedValue({
+    data: {
+      genres: [
+        {
+          id: 1,
+          name: "Horror",
+        },
+      ],
+    },
+  });
+
+  const list = await genres.fetchGenres();
+  expect(list.length).toBeGreaterThan(0);
+  expect(list[0].name).toBe("Horror");
+});
 
 it("should return a empty list", () => {
   const list = genres.getSelectedGenres();
