@@ -8,6 +8,6 @@ it("should return the default sorting option", () => {
 });
 
 it("should change the sorting option", () => {
-  const sortBy = sorting.setSortingOption("releaseDate");
-  expect(sortBy).toBe("releaseDate");
+  sorting.setSortingOption("releaseDate");
+  expect(sorting.getSortingOption()).toBe("releaseDate");
 });
