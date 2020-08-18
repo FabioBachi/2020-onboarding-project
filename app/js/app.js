@@ -1,26 +1,19 @@
-define(["underscore", "jquery", "views/home", "collections/SelectedGenres"], (
-  _,
-  $,
-  HomeView,
-  SelectedGenres
-) => {
+define([
+  "underscore",
+  "jquery",
+  "views/home",
+  "collections/SelectedGenres",
+  "../../../core/dist/bundle",
+], (_, $, HomeView, SelectedGenres, Core) => {
   const selectedGenres = new SelectedGenres();
   const homeView = new (HomeView(selectedGenres))({ el: $("#main") });
 
   window.addEventListener("onToggleGenre", (event) => {
-    const genre = selectedGenres.findWhere({ id: event.detail.genre.id });
-
-    if (!genre) {
-      selectedGenres.create(event.detail.genre);
-    } else {
-      genre.destroy();
-    }
+    selectedGenres.reset(Core.Genres.toggleGenre(event.detail.genre));
   });
 
   window.addEventListener("onChangeSorting", (event) => {
-    const sortBy = event.detail.sortBy;
-    window.localStorage.setItem("sortBy", sortBy);
-
+    Core.Sorting.setSortingOption(event.detail.sortBy);
     homeView.searchMovies();
   });
 

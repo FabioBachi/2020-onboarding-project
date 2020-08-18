@@ -1,12 +1,6 @@
-define(["backbone", "localStorage", "models/Genre", "utils/config"], function (
-  Backbone,
-  LocalStorage,
-  Genre,
-  config
-) {
+define(["backbone", "models/Genre"], function (Backbone, Genre) {
   const SelectedGenres = Backbone.Collection.extend({
     model: Genre,
-    localStorage: new Backbone.LocalStorage("selectedGenres"),
   });
 
   return SelectedGenres;
