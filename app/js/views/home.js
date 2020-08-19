@@ -12,21 +12,15 @@ define([
     const genres = new Genres();
     const movies = new Movies();
 
+    // Fetching the complete list of genres from the API through the Core library
     Core.Genres.fetchGenres()
       .then((response) => {
         genres.reset(response);
       })
       .catch((error) => console.log(error));
 
-    window.dispatchEvent(
-      new CustomEvent("onLoadGenres", {
-        detail: { genres: Core.Genres.getSelectedGenres() },
-      })
-    );
-
     const HomeView = Backbone.View.extend({
       loading: true,
-      movieList: [],
 
       genres,
       movies,
@@ -40,11 +34,15 @@ define([
         _.bindAll(this, "searchMovies");
         _.bindAll(this, "triggerMovieEvent");
 
+        // When any of the lists receive new data, the following callbacks are executed
         this.genres.bind("reset", this.searchMovies);
         this.movies.bind("reset", this.triggerMovieEvent);
         this.selectedGenres.bind("reset", this.searchMovies);
       },
 
+      /**
+       * Triggers a custom event to let the React App know that a new list of movies is available
+       */
       triggerMovieEvent: function () {
         window.dispatchEvent(
           new CustomEvent("onLoadMovies", {
@@ -53,6 +51,9 @@ define([
         );
       },
 
+      /**
+       * Uses the Core library to fetch a new list of movies
+       */
       searchMovies: async function () {
         this.loading = true;
         this.render();
@@ -60,26 +61,24 @@ define([
         await Core.Movies.fetchMovies(true)
           .then((response) => {
             this.loading = false;
-
-            this.movieList = response;
-            movies.reset(this.movieList);
+            movies.reset(response);
           })
           .catch((error) => {
             console.log(error);
           });
       },
 
+      /**
+       * Uses the Core library to fetch the next page of movies
+       */
       paginate: async function () {
         if (!Core.Movies.foundLastPage) {
           this.page++;
-          movies.url = Core.Movies.getFetchUrl();
 
           await Core.Movies.fetchMovies(false)
             .then((response) => {
               this.loading = false;
-
-              this.movieList = [...this.movieList, ...response];
-              movies.reset(this.movieList);
+              movies.reset([...this.movies.toJSON(), ...response]);
             })
             .catch((error) => {
               console.log(error);

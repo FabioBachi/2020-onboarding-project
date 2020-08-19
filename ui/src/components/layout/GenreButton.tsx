@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
 interface GenreButton {
@@ -11,14 +11,21 @@ const GenreButton: React.SFC<GenreButton> = ({
   genre,
   onToggleGenre,
   selected,
-}: GenreButton) => (
-  <button
-    type="button"
-    onClick={() => onToggleGenre(genre)}
-    className={classNames('genre-button', { selected })}
-  >
-    {genre.name}
-  </button>
-);
+}: GenreButton) => {
+  const [isSelected, setSelected] = useState(selected);
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        setSelected(!isSelected);
+        onToggleGenre(genre);
+      }}
+      className={classNames('genre-button', { selected: isSelected })}
+    >
+      {genre.name}
+    </button>
+  );
+};
 
 export default GenreButton;
