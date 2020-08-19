@@ -13,18 +13,26 @@ export default class Movies {
   currentPage: number = 1;
   foundLastPage: boolean = false;
 
+  /**
+   * Used to build a valid TMDb Movie Discovery URL, based on the genres and sorting options that the user selected.
+   * @return {string} A URL to use in the API request.
+   */
   getFetchUrl(): string {
-    const genres = this.genres
+    // Loads all selected genres from local storage.
+    const genres: string = this.genres
       .getSelectedGenres()
       .map((genre: Genre) => genre.id)
       .join(",");
 
-    const sortBy =
+    // Gets the selected sorting option.
+    const sortBy: string =
       this.sorting.getSortingOption() === "releaseDate"
         ? "release_date.desc"
         : "vote_average.desc";
 
-    const params = [
+    // Creating all parameters that will be in the URL.
+    // Using array syntax for better readability.
+    const params: string = [
       `sort_by=${sortBy}`,
       `with_genres=${genres}`,
       `primary_release_date.lte=${moment().format("YYYY-MM-DD")}`,
@@ -35,6 +43,11 @@ export default class Movies {
     return `${tmdb.baseUrl}/discover/movie?api_key=${tmdb.key}&${params}`;
   }
 
+  /**
+   * Fetches movie search results from the TMDb's API.
+   * @param {boolean} resetPagination If it is a new search, resetPagination can be used to reset the currentPage to 1.
+   * @return {Promise<Array<Movie>>} A promise with a list of movies as its result.
+   */
   async fetchMovies(resetPagination: boolean): Promise<Array<Movie>> {
     if (resetPagination) {
       this.setCurrentPage(1);
@@ -50,8 +63,10 @@ export default class Movies {
             response.data !== undefined &&
             response.data.results !== undefined
           ) {
+            // Controls if a next page is available or if it is the last one with tue current filters.
             this.foundLastPage = response.data.results.length < 20;
 
+            // Transforms all results in valid Movie type objects.
             const movies = response.data.results.map((movie: any) => ({
               id: movie.id,
               posterPath: movie.poster_path
@@ -74,6 +89,11 @@ export default class Movies {
     });
   }
 
+  /**
+   * Changes the currentPage number.
+   * @param {number} page
+   * @return {number} Redundantly returns the new currentPage number.
+   */
   setCurrentPage(page: number): number {
     this.currentPage = page >= 1 ? page : 1;
     return this.currentPage;

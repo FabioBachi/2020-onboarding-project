@@ -1,9 +1,9 @@
-import Genres from "./Classes/Genres";
-import Movies from "./Classes/Movies";
-import Sorting from "./Classes/Sorting";
+import GenresLib from "./Classes/Genres";
+import MoviesLib from "./Classes/Movies";
+import SortingLib from "./Classes/Sorting";
 
-const GenresLib = new Genres();
-const MoviesLib = new Movies();
-const SortingLib = new Sorting();
+const Genres = new GenresLib();
+const Movies = new MoviesLib();
+const Sorting = new SortingLib();
 
-export { GenresLib as Genres, MoviesLib as Movies, SortingLib as Sorting };
+export { Genres, Movies, Sorting };

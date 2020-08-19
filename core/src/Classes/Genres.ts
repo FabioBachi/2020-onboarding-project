@@ -3,6 +3,10 @@ import axios from "axios";
 import tmdb from "../Utils/tmdb";
 
 export default class Genres {
+  /**
+   * Fetches a genre list from the API.
+   * @return {Array<Genre>} A list of all TMDb's genres.
+   */
   async fetchGenres(): Promise<Array<Genre>> {
     return new Promise<Array<Genre>>((resolve, reject) => {
       axios
@@ -27,14 +31,24 @@ export default class Genres {
     });
   }
 
+  /**
+   * Returns a list of favorite genres previously stored when the user manually selected them.
+   * @return {Array<Genre>} The list of selected genres.
+   */
   getSelectedGenres(): Array<Genre> {
     const storedGenres: string | null = localStorage.getItem("genres");
     return storedGenres ? JSON.parse(storedGenres) : [];
   }
 
+  /**
+   *
+   * @param {Genre} genre The genre that must be added/removed from the local storage.
+   * @return {Array<Genre>} The list of selected genres.
+   */
   toggleGenre(genre: Genre): Array<Genre> {
     let genres: Array<Genre> = this.getSelectedGenres();
 
+    // Toggling: if it is in the local storage, remove it. Otherwise, add it.
     if (genres.find((g) => g.id == genre.id)) {
       genres = genres.filter((g) => g.id != genre.id);
     } else {

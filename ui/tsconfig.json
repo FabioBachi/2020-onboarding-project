@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "public",
-    "jsx": "react",
-    "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "outDir": "public",
+    "rootDir": "src",
+    "strict": true,
+    "target": "es6"
   },
   "include": ["src"]
 }
