@@ -25,10 +25,7 @@ define([
     );
 
     const HomeView = Backbone.View.extend({
-      page: 1,
-
       loading: true,
-      foundLastPage: false,
       movieList: [],
 
       genres,
