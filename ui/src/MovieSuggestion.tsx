@@ -24,7 +24,9 @@ const MovieSuggestions: React.SFC<Props> = ({
   const [loading, setLoading] = useState(loadingProps);
   const [movies, setMovies] = useState(moviesProps);
 
+  // Executed only once
   useEffect(() => {
+    // Listens to a onLoadMovies event to show them into the UI.
     window.addEventListener('onLoadMovies', (event: any) => {
       setMovies(event.detail.movies);
       setLoading(false);
