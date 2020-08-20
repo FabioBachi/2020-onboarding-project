@@ -4,7 +4,7 @@ import './assets/scss/main.scss';
 
 import Filters from './components/layout/Filters';
 import Header from './components/layout/Header';
-import MoviesList from './components/movies/MoviesList';
+import MoviesList from './components/Movies/MoviesList';
 
 interface Props {
   genres: Genre[];
