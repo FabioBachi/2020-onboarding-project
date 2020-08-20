@@ -49,15 +49,7 @@ module.exports = function (grunt) {
     babel: {
       options: {
         sourceMap: true,
-        presets: ["@babel/preset-env"],
-        plugins: [
-          [
-            "@babel/plugin-transform-runtime",
-            {
-              regenerator: true,
-            },
-          ],
-        ],
+        presets: ["@babel/preset-env"]
       },
       dist: {
         files: [
@@ -96,8 +88,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("default", [
     "clean",
-    // "run:react_build",
-    // "run:core_build",
+    "run:react_build",
+    "run:core_build",
     "copy",
     "cssmin",
     "babel",
