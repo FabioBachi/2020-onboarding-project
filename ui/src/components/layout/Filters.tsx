@@ -9,7 +9,7 @@ interface Props {
   selectedSorting?: string;
 }
 
-const Filters: React.SFC<Props> = ({
+const Filters: React.FC<Props> = ({
   genres,
   selectedGenres,
   selectedSorting,

@@ -87,8 +87,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("default", [
     "clean",
-    // "run:core_build",
-    // "run:ui_build",
+    "run:core_build",
+    "run:ui_build",
     "copy",
     "cssmin",
     "babel",

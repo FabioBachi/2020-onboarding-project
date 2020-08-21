@@ -5,7 +5,7 @@ interface Props {
   movies: Movie[];
 }
 
-const Movies: React.SFC<Props> = ({ movies }: Props) => {
+const Movies: React.FC<Props> = ({ movies }: Props) => {
   return movies && movies.length ? (
     <ul id="movies-list">
       {movies.map((movie: Movie) => (

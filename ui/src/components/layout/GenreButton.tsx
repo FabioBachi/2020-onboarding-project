@@ -7,7 +7,7 @@ interface GenreButton {
   selected: boolean;
 }
 
-const GenreButton: React.SFC<GenreButton> = ({
+const GenreButton: React.FC<GenreButton> = ({
   genre,
   onToggleGenre,
   selected,

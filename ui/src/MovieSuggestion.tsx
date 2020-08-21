@@ -14,7 +14,7 @@ interface Props {
   selectedSorting: string;
 }
 
-const MovieSuggestions: React.SFC<Props> = ({
+const MovieSuggestions: React.FC<Props> = ({
   loading: loadingProps,
   genres,
   movies: moviesProps,

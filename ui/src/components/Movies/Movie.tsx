@@ -4,7 +4,7 @@ type Props = {
   movie: Movie;
 };
 
-const Movie: React.SFC<Props> = ({ movie }: Props) => (
+const Movie: React.FC<Props> = ({ movie }: Props) => (
   <li className="movie-item">
     {movie.posterPath ? (
       <img alt={movie.title} src={movie.posterPath} />

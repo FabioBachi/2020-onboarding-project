@@ -7,7 +7,7 @@ interface Props {
   selectedGenres?: number[];
 }
 
-const Genres: React.SFC<Props> = ({ genres, selectedGenres }: Props) => {
+const Genres: React.FC<Props> = ({ genres, selectedGenres }: Props) => {
   const onToggleGenre: Function = (genre: Genre): void => {
     window.dispatchEvent(
       new CustomEvent('onToggleGenre', { detail: { genre } })

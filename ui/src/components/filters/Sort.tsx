@@ -5,10 +5,7 @@ interface Props {
   selectedSorting?: string;
 }
 
-const Sort: React.SFC<Props> = ({
-  onChangeSorting,
-  selectedSorting,
-}: Props) => (
+const Sort: React.FC<Props> = ({ onChangeSorting, selectedSorting }: Props) => (
   <div className="sort">
     <label htmlFor="sort">
       <div className="filter-label">Sort by</div>
