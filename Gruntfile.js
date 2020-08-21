@@ -5,11 +5,11 @@ module.exports = function (grunt) {
     clean: ["dist"],
 
     run: {
-      react_build: {
-        exec: "cd ui && yarn install && yarn test && yarn build",
-      },
       core_build: {
         exec: "cd core && yarn install && yarn test && yarn build",
+      },
+      ui_build: {
+        exec: "cd ui && yarn install && yarn test && yarn build",
       },
     },
 
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
     babel: {
       options: {
         sourceMap: true,
-        presets: ["@babel/preset-env"]
+        presets: ["@babel/preset-env"],
       },
       dist: {
         files: [
@@ -69,9 +69,8 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: "dist/app/js/",
-            src: ["*.js"],
-            dest: "dist/app/js/",
+            src: ["dist/app/**/*.js"],
+            dest: "",
             ext: ".js",
           },
         ],
@@ -88,11 +87,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask("default", [
     "clean",
-    "run:react_build",
-    "run:core_build",
+    // "run:core_build",
+    // "run:ui_build",
     "copy",
     "cssmin",
     "babel",
-    // "uglify",
+    "uglify",
   ]);
 };
