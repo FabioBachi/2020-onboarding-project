@@ -44,3 +44,26 @@ it("should fetch a movie list", async () => {
   expect(list.length).toBeGreaterThan(0);
   expect(list[0].title).toBe("Blade Runner 2049");
 });
+
+it("should fetch a video from a specific movie", async () => {
+  mockedAxios.get.mockResolvedValue({
+    data: {
+      results: [
+        {
+          id: "533ec654c3a36854480003eb",
+          iso_639_1: "en",
+          iso_3166_1: "US",
+          key: "SUXWAEX2jlg",
+          name: "Trailer 1",
+          site: "YouTube",
+          size: 720,
+          type: "Trailer",
+        },
+      ],
+    },
+  });
+
+  const video: Video = await movies.fetchMainVideo(1);
+  expect(video).toBeDefined();
+  expect(video.id).toBe("533ec654c3a36854480003eb");
+});

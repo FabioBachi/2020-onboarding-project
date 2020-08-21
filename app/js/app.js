@@ -8,12 +8,6 @@ define([
   const selectedGenres = new SelectedGenres();
   const homeView = new (HomeView(selectedGenres))({ el: $("#main") });
 
-  // When a genre button has been clicked, onToggleGenre is triggered
-  window.addEventListener("onToggleGenre", (event) => {
-    // Uses the Core library to set a new list of genres, after toggling the selected one
-    selectedGenres.reset(Core.Genres.toggleGenre(event.detail.genre));
-  });
-
   // onChangeSorting is triggered when a user changes the sorting option in the React Application
   window.addEventListener("onChangeSorting", (event) => {
     // Sets the new sorting option in local storage with Core library
@@ -21,6 +15,36 @@ define([
 
     // Fetch a new list of movies with the new sorting option
     homeView.searchMovies();
+  });
+
+  // When a genre button has been clicked, onToggleGenre is triggered
+  window.addEventListener("onToggleGenre", (event) => {
+    // Uses the Core library to set a new list of genres, after toggling the selected one
+    selectedGenres.reset(Core.Genres.toggleGenre(event.detail.genre));
+  });
+
+  // When a user clicks the "Watch trailer" button.
+  window.addEventListener("onVideoDemand", async (event) => {
+    if (event.detail.movieId) {
+      Core.Movies.fetchMainVideo(event.detail.movieId)
+        .then((video) => {
+          // Triggers a new event with the video as its payload.
+          window.dispatchEvent(
+            new CustomEvent("onLoadVideo", {
+              detail: { movieId: event.detail.movieId, video },
+            })
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+
+          window.dispatchEvent(
+            new CustomEvent("onLoadVideo", {
+              detail: { movieId: event.detail.movieId, video: undefined },
+            })
+          );
+        });
+    }
   });
 
   // Infinite scroll pagination

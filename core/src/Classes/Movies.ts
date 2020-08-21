@@ -98,4 +98,46 @@ export default class Movies {
     this.currentPage = page >= 1 ? page : 1;
     return this.currentPage;
   }
+
+  /**
+   * Fetches a list of videos from the API, but returns only one, giving priority to trailers. If no trailer is found, it returns the first video from the list.
+   * @param {number} movieId
+   * @return {Promise<Movie>} A promise with a Video object.
+   */
+  async fetchMainVideo(movieId: number): Promise<Video> {
+    return new Promise<Video>((resolve, reject) => {
+      axios
+        .get(`${tmdb.baseUrl}/movie/${movieId}/videos?api_key=${tmdb.key}`)
+        .then((response) => {
+          if (
+            response.data !== undefined &&
+            response.data.results !== undefined
+          ) {
+            if (response.data.results.length === 0) {
+              resolve();
+            }
+
+            // Search for trailers
+            let video: any = response.data.results.find(
+              (v: any) => v.type == "Trailer"
+            );
+
+            // If no trailer is found, get the first video
+            video = video || response.data.results[0];
+
+            resolve({
+              id: video.id,
+              key: video.key,
+              site: video.site,
+              type: video.type,
+            });
+          } else {
+            reject("It was not possible to fetch data from the API.");
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
