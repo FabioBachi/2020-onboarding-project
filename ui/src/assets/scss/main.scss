@@ -22,6 +22,7 @@ body {
   color: $primaryColor;
 }
 
+@import 'components/dialog.scss';
 @import 'components/filters.scss';
 @import 'components/header.scss';
 @import 'components/movies.scss';

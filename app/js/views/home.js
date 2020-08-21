@@ -17,7 +17,7 @@ define([
       .then((response) => {
         genres.reset(response);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
 
     const HomeView = Backbone.View.extend({
       loading: true,
@@ -63,9 +63,7 @@ define([
             this.loading = false;
             movies.reset(response);
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
       },
 
       /**
@@ -80,9 +78,7 @@ define([
               this.loading = false;
               movies.reset([...this.movies.toJSON(), ...response]);
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
         }
       },
 

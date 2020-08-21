@@ -107,8 +107,9 @@ export default class Movies {
   async fetchMainVideo(movieId: number): Promise<Video> {
     return new Promise<Video>((resolve, reject) => {
       axios
-        .get(`${tmdb.baseUrl}/movie/${movieId}/videos?api_key=${tmdb.key}`)
+        .get(`${tmdb.baseUrl}/moviaaaae/${movieId}/videos?api_key=${tmdb.key}`)
         .then((response) => {
+          reject("teste");
           if (
             response.data !== undefined &&
             response.data.results !== undefined

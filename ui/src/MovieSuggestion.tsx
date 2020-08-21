@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { AlertDialog } from '@arterial/dialog';
+
 import './assets/scss/main.scss';
 
 import Filters from './components/layout/Filters';
@@ -21,14 +23,21 @@ const MovieSuggestions: React.FC<Props> = ({
   selectedGenres,
   selectedSorting,
 }: Props) => {
-  const [loading, setLoading] = useState(loadingProps);
-  const [movies, setMovies] = useState(moviesProps);
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(loadingProps);
+  const [movies, setMovies] = useState<Array<Movie>>(moviesProps);
 
   // Executed only once
   useEffect(() => {
     // Listens to a onLoadMovies event to show them into the UI.
     window.addEventListener('onLoadMovies', (event: any) => {
       setMovies(event.detail.movies);
+      setLoading(false);
+    });
+
+    // Listen to errors triggered by the Backbone app.
+    window.addEventListener('onError', () => {
+      setError(true);
       setLoading(false);
     });
   }, []);
@@ -46,6 +55,14 @@ const MovieSuggestions: React.FC<Props> = ({
       ) : (
         <div className="loading">Loading ...</div>
       )}
+
+      <AlertDialog
+        title="Ops, something went wrong."
+        content="Please check your connection and try again in a moment."
+        confirmingButtonLabel="Close"
+        onClose={() => setError(false)}
+        open={error}
+      />
     </div>
   );
 };

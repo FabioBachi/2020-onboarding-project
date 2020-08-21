@@ -36,7 +36,7 @@ define([
           );
         })
         .catch((error) => {
-          console.log(error);
+          window.dispatchEvent(new CustomEvent("onError"));
 
           window.dispatchEvent(
             new CustomEvent("onLoadVideo", {
