@@ -12,6 +12,15 @@ Technologies used in this project:
 - Enzyme
 - SASS
 
+# Building and running in production
+
+The whole application can be built and ready for production with `grunt` command in the root folder. Automated tests will be executed and applications will be built and compressed. After executing the `grunt` command, you can run the final application with `http-server` and accessing it in your browser (open the `/dist/app` folder).
+
+```sh
+grunt
+http-server
+```
+
 # BackboneJS Application / Base App
 
 The entry point for the whole application is the BackboneJS app.
