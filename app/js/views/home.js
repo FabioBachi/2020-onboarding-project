@@ -12,8 +12,6 @@ define([
     const genres = new Genres();
     const movies = new Movies();
 
-    // Fetching the complete list of genres from the API through the Core library
-
     const HomeView = Backbone.View.extend({
       genres,
       movies,
@@ -32,6 +30,7 @@ define([
         this.movies.bind("reset", this.triggerMovieEvent);
         this.selectedGenres.bind("reset", this.searchMovies);
 
+        // Fetching the complete list of genres from the API through the Core library
         Core.Genres.fetchGenres()
           .then((response) => {
             genres.reset(response);
