@@ -23,7 +23,7 @@ const MovieSuggestions: React.FC<Props> = ({
   selectedGenres,
   selectedSorting,
 }: Props) => {
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(loadingProps);
   const [movies, setMovies] = useState<Array<Movie>>(moviesProps);
 
@@ -36,8 +36,11 @@ const MovieSuggestions: React.FC<Props> = ({
     });
 
     // Listen to errors triggered by the Backbone app.
-    window.addEventListener('onError', () => {
-      setError(true);
+    window.addEventListener('onError', (event: any) => {
+      setError(
+        event.detail.message ||
+          'Please check your connection and try again in a moment.'
+      );
       setLoading(false);
     });
   }, []);
@@ -58,10 +61,10 @@ const MovieSuggestions: React.FC<Props> = ({
 
       <AlertDialog
         title="Ops, something went wrong."
-        content="Please check your connection and try again in a moment."
+        content={error}
         confirmingButtonLabel="Close"
-        onClose={() => setError(false)}
-        open={error}
+        onClose={() => setError(null)}
+        open={error !== null}
       />
     </div>
   );

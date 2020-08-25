@@ -23,8 +23,17 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
     window.addEventListener('onLoadVideo', (event: any) => {
       if (event.detail.movieId === movie.id) {
         setLoading(false);
-        setVideo(event.detail.video);
-        setShowVideo(true);
+
+        if (event.detail.video) {
+          setVideo(event.detail.video);
+          setShowVideo(true);
+        } else {
+          window.dispatchEvent(
+            new CustomEvent('onError', {
+              detail: { message: 'No video was found for this movie.' },
+            })
+          );
+        }
       }
     });
   }, []);
