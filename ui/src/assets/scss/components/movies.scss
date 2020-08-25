@@ -2,7 +2,7 @@
   align-items: stretch;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@
     background-color: $darkGrey;
     border-radius: 5px;
     box-sizing: border-box;
-    margin: 0 0 20px;
+    margin: 0 20px 20px 0;
     overflow: hidden;
     padding: 0;
     position: relative;
@@ -21,6 +21,9 @@
       content: '';
       display: block;
       padding-bottom: 210%;
+    }
+    &:nth-child(4n) {
+      margin-right: 0;
     }
     img {
       left: 0;

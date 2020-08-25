@@ -15,7 +15,11 @@ const Filters: React.FC<Props> = ({
   selectedSorting,
 }: Props) => (
   <div id="filters">
-    <Genres genres={genres} selectedGenres={selectedGenres} />
+    <Genres
+      genres={genres}
+      selectedGenres={selectedGenres}
+      selectedSorting={selectedSorting}
+    />
     <Sort
       onChangeSorting={(event: React.FormEvent<HTMLSelectElement>) => {
         window.dispatchEvent(

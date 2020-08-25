@@ -25,22 +25,28 @@ export default class Movies {
       .join(",");
 
     // Gets the selected sorting option.
-    const sortBy: string =
-      this.sorting.getSortingOption() === "releaseDate"
-        ? "release_date.desc"
-        : "vote_average.desc";
+    const sortBy: string = this.sorting.transformSortingOption(
+      this.sorting.getSortingOption()
+    );
+
+    const endpoint: string =
+      sortBy === "trending" ? "/trending/movie/day" : "/discover/movie";
 
     // Creating all parameters that will be in the URL.
     // Using array syntax for better readability.
-    const params: string = [
-      `sort_by=${sortBy}`,
-      `with_genres=${genres}`,
-      `primary_release_date.lte=${moment().format("YYYY-MM-DD")}`,
-      "vote_count.gte=500",
-      `page=${this.currentPage}`,
-    ].join("&");
+    // The Trending Movies endpoint does not accept any kind of params or filters but pagination.
+    const params: Array<string> =
+      sortBy !== "trending"
+        ? [
+            `sort_by=${sortBy}`,
+            `with_genres=${genres}`,
+            `primary_release_date.lte=${moment().format("YYYY-MM-DD")}`,
+            "vote_count.gte=500",
+          ]
+        : [];
+    params.push(`page=${this.currentPage}`);
 
-    return `${tmdb.baseUrl}/discover/movie?api_key=${tmdb.key}&${params}`;
+    return `${tmdb.baseUrl}${endpoint}?api_key=${tmdb.key}&${params.join("&")}`;
   }
 
   /**

@@ -14,8 +14,9 @@ const Sort: React.FC<Props> = ({ onChangeSorting, selectedSorting }: Props) => (
         onChange={onChangeSorting}
         value={selectedSorting || 'voteAverage'}
       >
-        <option value="voteAverage">Vote average</option>
         <option value="releaseDate">Release date</option>
+        <option value="trending">Trending</option>
+        <option value="voteAverage">Vote average</option>
       </select>
     </label>
   </div>
