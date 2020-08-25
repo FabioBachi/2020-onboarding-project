@@ -15,5 +15,6 @@
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^5.0.0",
     "grunt-run": "^0.8.1"
-  }
+  },
+  "dependencies": {}
 }

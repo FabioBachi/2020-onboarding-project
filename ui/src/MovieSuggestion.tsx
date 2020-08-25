@@ -1,38 +1,46 @@
 import React, { useEffect, useState } from 'react';
-
 import { AlertDialog } from '@arterial/dialog';
+import { connect } from 'react-redux';
 
 import './assets/scss/main.scss';
 
 import Filters from './components/layout/Filters';
 import Header from './components/layout/Header';
 import MoviesList from './components/movies/MoviesList';
+import { Creators } from './store/ducks/movies';
 
-interface Props {
+interface MovieProps {
   genres: Genre[];
-  loading: boolean;
   movies: Movie[];
   selectedGenres: number[];
   selectedSorting: string;
 }
 
-const MovieSuggestions: React.FC<Props> = ({
-  loading: loadingProps,
+const mapDispatchToProps = {
+  changeSorting: Creators.changeSorting,
+  toggleLoading: Creators.toggleLoading,
+};
+
+type Props = MovieProps & typeof mapDispatchToProps;
+
+const MovieSuggestion: React.FC<Props> = ({
   genres,
   movies: moviesProps,
   selectedGenres,
   selectedSorting,
+  ...props
 }: Props) => {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(loadingProps);
   const [movies, setMovies] = useState<Array<Movie>>(moviesProps);
 
   // Executed only once
   useEffect(() => {
+    props.changeSorting(selectedSorting);
+
     // Listens to a onLoadMovies event to show them into the UI.
     window.addEventListener('onLoadMovies', (event: any) => {
       setMovies(event.detail.movies);
-      setLoading(false);
+      props.toggleLoading(false);
     });
 
     // Listen to errors triggered by the Backbone app.
@@ -41,23 +49,15 @@ const MovieSuggestions: React.FC<Props> = ({
         event.detail.message ||
           'Please check your connection and try again in a moment.'
       );
-      setLoading(false);
+      props.toggleLoading(false);
     });
   }, []);
 
   return (
     <div id="movie-suggestion">
       <Header />
-      <Filters
-        genres={genres}
-        selectedGenres={selectedGenres}
-        selectedSorting={selectedSorting}
-      />
-      {!loading ? (
-        <MoviesList movies={movies} />
-      ) : (
-        <div className="loading">Loading ...</div>
-      )}
+      <Filters genres={genres} selectedGenres={selectedGenres} />
+      <MoviesList movies={movies} />
 
       <AlertDialog
         title="Ops, something went wrong."
@@ -70,4 +70,4 @@ const MovieSuggestions: React.FC<Props> = ({
   );
 };
 
-export default MovieSuggestions;
+export default connect(undefined, mapDispatchToProps)(MovieSuggestion);

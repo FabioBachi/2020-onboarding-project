@@ -19,7 +19,6 @@ render(
         name: 'Science Fiction',
       },
     ]}
-    loading={false}
     movies={[
       {
         id: 1,

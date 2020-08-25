@@ -3,7 +3,7 @@ const config = require('./webpack.config');
 
 module.exports = {
   ...config,
-  entry: path.resolve(__dirname, 'src', 'index.production.js'),
+  entry: path.resolve(__dirname, 'src', 'customElement.js'),
   output: { ...config.output, libraryTarget: 'amd' },
   module: {
     rules: [

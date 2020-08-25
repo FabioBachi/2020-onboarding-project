@@ -1,23 +1,32 @@
 import React from 'react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import GenreButton from '../layout/GenreButton';
+import { Creators } from '../../store/ducks/movies';
 
-interface Props {
+interface GenresProps {
   genres: Genre[];
   selectedGenres?: number[];
   selectedSorting?: string;
 }
 
+const mapDispatchToProps = { toggleLoading: Creators.toggleLoading };
+
+type Props = GenresProps & typeof mapDispatchToProps;
+
 const Genres: React.FC<Props> = ({
   genres,
   selectedGenres,
   selectedSorting,
+  ...props
 }: Props) => {
   const onToggleGenre: Function = (genre: Genre): void => {
     window.dispatchEvent(
       new CustomEvent('onToggleGenre', { detail: { genre } })
     );
+
+    props.toggleLoading(true);
   };
 
   return (
@@ -59,4 +68,4 @@ const Genres: React.FC<Props> = ({
 
 Genres.defaultProps = { selectedGenres: [], selectedSorting: undefined };
 
-export default Genres;
+export default connect(undefined, mapDispatchToProps)(Genres);

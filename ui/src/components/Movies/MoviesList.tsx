@@ -1,20 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Movie from './Movie';
+import { Creators } from '../../store/ducks/movies';
 
 interface Props {
+  loading: boolean;
   movies: Movie[];
 }
 
-const Movies: React.FC<Props> = ({ movies }: Props) => {
+const Movies: React.FC<Props> = ({ loading, movies }: Props) => {
   return movies && movies.length ? (
-    <ul id="movies-list">
-      {movies.map((movie: Movie) => (
-        <Movie key={`movie-${movie.id}`} movie={movie} />
-      ))}
-    </ul>
+    <>
+      {!loading ? (
+        <ul id="movies-list">
+          {movies.map((movie: Movie) => (
+            <Movie key={`movie-${movie.id}`} movie={movie} />
+          ))}
+        </ul>
+      ) : (
+        <div className="loading">Loading ...</div>
+      )}
+    </>
   ) : (
     <div className="no-items">No movies found.</div>
   );
 };
 
-export default Movies;
+const mapStateToProps = ({ movies }: StoreState) => {
+  return {
+    loading: movies.loading,
+  };
+};
+
+const mapDispatchToProps = { toggleLoading: Creators.toggleLoading };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

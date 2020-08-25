@@ -1,17 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import MovieSuggestion from './MovieSuggestion';
+
+import App from './index.production';
 import * as styles from './assets/scss/main.scss';
 
 export default class MovieSuggestionElement extends HTMLElement {
   static get observedAttributes() {
-    return [
-      'genres',
-      'loading',
-      'movies',
-      'selected-genres',
-      'selected-sorting',
-    ];
+    return ['genres', 'movies', 'selected-genres', 'selected-sorting'];
   }
 
   attributeChangedCallback(param, oldValue, newValue) {
@@ -48,12 +43,9 @@ export default class MovieSuggestionElement extends HTMLElement {
 
     ReactDOM.render(
       React.createElement(
-        MovieSuggestion,
+        App,
         {
           genres: this.genres || [],
-          loading:
-            this.hasAttribute('loading') &&
-            this.getAttribute('loading') !== 'false',
           movies: this.movies || [],
           selectedGenres: this.selectedGenres || [],
           selectedSorting: this.selectedSorting || 'voteAverage',

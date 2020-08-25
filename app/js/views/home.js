@@ -13,15 +13,8 @@ define([
     const movies = new Movies();
 
     // Fetching the complete list of genres from the API through the Core library
-    Core.Genres.fetchGenres()
-      .then((response) => {
-        genres.reset(response);
-      })
-      .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
 
     const HomeView = Backbone.View.extend({
-      loading: true,
-
       genres,
       movies,
       selectedGenres,
@@ -38,6 +31,13 @@ define([
         this.genres.bind("reset", this.searchMovies);
         this.movies.bind("reset", this.triggerMovieEvent);
         this.selectedGenres.bind("reset", this.searchMovies);
+
+        Core.Genres.fetchGenres()
+          .then((response) => {
+            genres.reset(response);
+            this.render();
+          })
+          .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
       },
 
       /**
@@ -55,12 +55,8 @@ define([
        * Uses the Core library to fetch a new list of movies
        */
       searchMovies: async function () {
-        this.loading = true;
-        this.render();
-
         await Core.Movies.fetchMovies(true)
           .then((response) => {
-            this.loading = false;
             movies.reset(response);
           })
           .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
@@ -75,7 +71,6 @@ define([
 
           await Core.Movies.fetchMovies(false)
             .then((response) => {
-              this.loading = false;
               movies.reset([...this.movies.toJSON(), ...response]);
             })
             .catch((error) => window.dispatchEvent(new CustomEvent("onError")));
@@ -88,7 +83,6 @@ define([
             genres: stringUtils.escapeHtml(
               JSON.stringify(this.genres.toJSON())
             ),
-            loading: this.loading ? "loading" : "",
             selectedGenres: JSON.stringify(
               Core.Genres.getSelectedGenres().map((genre) => genre.id)
             ),

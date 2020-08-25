@@ -1,38 +1,62 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { Creators } from '../../store/ducks/movies';
 
 import Genres from '../filters/Genres';
 import Sort from '../filters/Sort';
 
-interface Props {
+interface FiltersProps {
   genres: Genre[];
   selectedGenres?: number[];
   selectedSorting?: string;
 }
 
+const mapDispatchToProps = {
+  changeSorting: Creators.changeSorting,
+  toggleLoading: Creators.toggleLoading,
+};
+
+type Props = FiltersProps & typeof mapDispatchToProps;
+
 const Filters: React.FC<Props> = ({
   genres,
   selectedGenres,
   selectedSorting,
-}: Props) => (
-  <div id="filters">
-    <Genres
-      genres={genres}
-      selectedGenres={selectedGenres}
-      selectedSorting={selectedSorting}
-    />
-    <Sort
-      onChangeSorting={(event: React.FormEvent<HTMLSelectElement>) => {
-        window.dispatchEvent(
-          new CustomEvent('onChangeSorting', {
-            detail: { sortBy: event.currentTarget.value },
-          })
-        );
-      }}
-      selectedSorting={selectedSorting}
-    />
-  </div>
-);
+  ...props
+}: Props) => {
+  const onChangeSorting = (event: React.FormEvent<HTMLSelectElement>) => {
+    window.dispatchEvent(
+      new CustomEvent('onChangeSorting', {
+        detail: { sortBy: event.currentTarget.value },
+      })
+    );
+
+    props.changeSorting(event.currentTarget.value);
+    props.toggleLoading(true);
+  };
+
+  return (
+    <div id="filters">
+      <Genres
+        genres={genres}
+        selectedGenres={selectedGenres}
+        selectedSorting={selectedSorting}
+      />
+      <Sort
+        onChangeSorting={onChangeSorting}
+        selectedSorting={selectedSorting}
+      />
+    </div>
+  );
+};
 
 Filters.defaultProps = { selectedGenres: [], selectedSorting: undefined };
 
-export default Filters;
+const mapStateToProps = ({ movies }: StoreState) => {
+  return {
+    selectedSorting: movies.selectedSorting,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);
