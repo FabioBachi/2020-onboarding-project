@@ -1,6 +1,6 @@
 interface MovieActionPayload {
-  loading: boolean;
-  selectedSorting: string;
+  loading?: boolean;
+  selectedSorting?: string;
 }
 
 interface MovieAction {

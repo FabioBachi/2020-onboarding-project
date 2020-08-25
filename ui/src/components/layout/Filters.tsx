@@ -53,10 +53,8 @@ const Filters: React.FC<Props> = ({
 
 Filters.defaultProps = { selectedGenres: [], selectedSorting: undefined };
 
-const mapStateToProps = ({ movies }: StoreState) => {
-  return {
-    selectedSorting: movies.selectedSorting,
-  };
-};
+const mapStateToProps = ({ movies }: StoreState) => ({
+  selectedSorting: movies.selectedSorting,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);

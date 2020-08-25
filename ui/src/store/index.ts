@@ -1,9 +1,5 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import logger from 'redux-logger';
+import { combineReducers, createStore } from 'redux';
 
 import movies from './ducks/movies';
 
-export default createStore(
-  combineReducers({ movies }),
-  applyMiddleware(logger)
-);
+export default createStore(combineReducers({ movies }));

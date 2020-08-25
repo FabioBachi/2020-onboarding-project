@@ -51,7 +51,6 @@ const Genres: React.FC<Props> = ({
                 key={`genre-${genre.id}`}
                 onToggleGenre={onToggleGenre}
                 selected={
-                  selectedSorting !== 'trending' &&
                   selectedGenres !== undefined &&
                   selectedGenres.indexOf(genre.id) >= 0
                 }

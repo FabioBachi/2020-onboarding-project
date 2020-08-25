@@ -13,5 +13,5 @@ it('should dispatch onChange', () => {
 
 it('should have two options only', () => {
   const wrapper = shallow(<Sort onChangeSorting={() => {}} />);
-  expect(wrapper.find('option').length).toBe(2);
+  expect(wrapper.find('option').length).toBe(3);
 });

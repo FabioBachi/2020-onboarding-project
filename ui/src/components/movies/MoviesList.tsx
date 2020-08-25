@@ -5,7 +5,7 @@ import Movie from './Movie';
 import { Creators } from '../../store/ducks/movies';
 
 interface Props {
-  loading: boolean;
+  loading?: boolean;
   movies: Movie[];
 }
 
@@ -27,11 +27,11 @@ const Movies: React.FC<Props> = ({ loading, movies }: Props) => {
   );
 };
 
-const mapStateToProps = ({ movies }: StoreState) => {
-  return {
-    loading: movies.loading,
-  };
-};
+Movies.defaultProps = { loading: false };
+
+const mapStateToProps = ({ movies }: StoreState) => ({
+  loading: movies.loading,
+});
 
 const mapDispatchToProps = { toggleLoading: Creators.toggleLoading };
 
