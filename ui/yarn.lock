@@ -1013,6 +1013,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@charie/react-skeleton-preload@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@charie/react-skeleton-preload/-/react-skeleton-preload-1.0.1.tgz#be3492a00f23886e99372656702955d2ebe29c99"
+  integrity sha512-bV0fNZf/d0w64qTJhWj83ek8QHxJnaj02VqS78xPFky9vQG+D8B80e1jP+QhOoRQwxDJH6UaaM1DX5rW+XfMyA==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"

@@ -25,11 +25,18 @@
     &:nth-child(4n) {
       margin-right: 0;
     }
-    img {
+    .movie-loading {
+      position: absolute;
+    }
+    img,
+    .movie-poster-loading {
       left: 0;
       position: absolute;
       top: 0;
       width: 100%;
+    }
+    .movie-poster-loading {
+      height: 68%;
     }
     .movie-info {
       background-color: $darkGrey;
@@ -46,10 +53,20 @@
         font-weight: bold;
         margin: 0 0 5px;
         padding: 0;
+
+        // Loader
+        [class*='Skeleton'] {
+          width: 80% !important;
+        }
       }
       .movie-text {
         color: white;
         font-size: 12px;
+
+        // Loader
+        [class*='Skeleton'] {
+          margin-top: 10px !important;
+        }
       }
       .movie-actions {
         align-items: flex-start;
@@ -85,7 +102,29 @@
           font-size: 15px;
           margin-right: 10px;
         }
+
+        // Loader
+        [class*='Skeleton'] {
+          margin-right: 5px !important;
+        }
       }
     }
+  }
+}
+
+[class*='reactSkeleton'] {
+  animation: ReactSkeletonAnimation 1.2s ease-in-out infinite;
+
+  &::before {
+    content: '\A0';
+  }
+}
+
+@keyframes ReactSkeletonAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
   }
 }

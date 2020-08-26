@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Movie from './Movie';
+import MovieLoading from './MovieLoading';
 import { Creators } from '../../store/ducks/movies';
 
 interface Props {
@@ -11,17 +12,15 @@ interface Props {
 
 const Movies: React.FC<Props> = ({ loading, movies }: Props) => {
   return movies && movies.length ? (
-    <>
+    <ul id="movies-list">
       {!loading ? (
-        <ul id="movies-list">
-          {movies.map((movie: Movie) => (
-            <Movie key={`movie-${movie.id}`} movie={movie} />
-          ))}
-        </ul>
+        movies.map((movie: Movie) => (
+          <Movie key={`movie-${movie.id}`} movie={movie} />
+        ))
       ) : (
-        <div className="loading">Loading ...</div>
+        <MovieLoading />
       )}
-    </>
+    </ul>
   ) : (
     <div className="no-items">No movies found.</div>
   );
