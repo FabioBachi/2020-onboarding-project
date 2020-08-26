@@ -46,8 +46,9 @@ const MovieSuggestion: React.FC<Props> = ({
     // Listen to errors triggered by the Backbone app.
     window.addEventListener('onError', (event: any) => {
       setError(
-        event.detail.message ||
-          'Please check your connection and try again in a moment.'
+        event.detail && event.detail.message
+          ? event.detail.message
+          : 'Please check your connection and try again in a moment.'
       );
       props.toggleLoading(false);
     });
