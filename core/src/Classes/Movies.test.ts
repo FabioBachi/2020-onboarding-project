@@ -10,6 +10,7 @@ const sorting = new Sorting();
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+mockedAxios.create.mockReturnValue(mockedAxios);
 
 it("should return a valid TMDb url", () => {
   genres.toggleGenre({ id: 27, name: "Horror" });

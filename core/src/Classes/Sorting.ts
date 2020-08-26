@@ -16,8 +16,8 @@ export default class Sorting {
   }
 
   /**
-   * Transforms a "application sorting option" to the API sorting option.
-   * @param {string} option The sorting option.
+   * Transforms an "application sorting option" to the API sorting option.
+   * @param {string} option The new sorting option.
    * @return {string} A sorting option that can be used by the API.
    */
   transformSortingOption(option: string): string {

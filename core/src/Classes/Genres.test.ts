@@ -5,6 +5,7 @@ const genres = new Genres();
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+mockedAxios.create.mockReturnValue(mockedAxios);
 
 it("should fetch a movie list", async () => {
   mockedAxios.get.mockResolvedValue({

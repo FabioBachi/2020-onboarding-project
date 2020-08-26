@@ -1,12 +1,12 @@
-import axios from "axios";
 import moment from "moment";
 
+import Core from "./Core";
 import tmdb from "../Utils/tmdb";
 
 import Genres from "./Genres";
 import Sorting from "./Sorting";
 
-export default class Movies {
+export default class Movies extends Core {
   genres: Genres = new Genres();
   sorting: Sorting = new Sorting();
 
@@ -61,8 +61,8 @@ export default class Movies {
       this.setCurrentPage(this.currentPage + 1);
     }
 
-    return new Promise<Array<Movie>>((resolve, reject) => {
-      axios
+    return new Promise<Array<Movie>>(async (resolve, reject) => {
+      (await this.getApi())
         .get(this.getFetchUrl())
         .then((response) => {
           if (
@@ -111,8 +111,8 @@ export default class Movies {
    * @return {Promise<Movie>} A promise with a Video object.
    */
   async fetchMainVideo(movieId: number): Promise<Video> {
-    return new Promise<Video>((resolve, reject) => {
-      axios
+    return new Promise<Video>(async (resolve, reject) => {
+      (await this.getApi())
         .get(`${tmdb.baseUrl}/movie/${movieId}/videos?api_key=${tmdb.key}`)
         .then((response) => {
           if (

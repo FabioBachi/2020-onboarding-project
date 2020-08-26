@@ -1,15 +1,14 @@
-import axios from "axios";
-
+import Core from "./Core";
 import tmdb from "../Utils/tmdb";
 
-export default class Genres {
+export default class Genres extends Core {
   /**
    * Fetches a genre list from the API.
    * @return {Array<Genre>} A list of all TMDb's genres.
    */
   async fetchGenres(): Promise<Array<Genre>> {
-    return new Promise<Array<Genre>>((resolve, reject) => {
-      axios
+    return new Promise<Array<Genre>>(async (resolve, reject) => {
+      (await this.getApi())
         .get(`${tmdb.baseUrl}/genre/movie/list?api_key=${tmdb.key}`)
         .then((response) => {
           if (
