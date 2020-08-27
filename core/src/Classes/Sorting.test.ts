@@ -1,13 +1,20 @@
+import { expect } from "chai";
 import Sorting from "./Sorting";
 
-const sorting = new Sorting();
+describe("Sorting", function () {
+  let sorting: Sorting;
 
-it("should return the default sorting option", () => {
-  const sortBy = sorting.getSortingOption();
-  expect(sortBy).toBe(sorting.defaultSortingOption);
-});
+  before(() => {
+    sorting = new Sorting();
+  });
 
-it("should change the sorting option", () => {
-  sorting.setSortingOption("releaseDate");
-  expect(sorting.getSortingOption()).toBe("releaseDate");
+  it("should return the default sorting option", function () {
+    const sortBy = sorting.getSortingOption();
+    expect(sortBy).to.equal(sorting.defaultSortingOption);
+  });
+
+  it("should change the sorting option", function () {
+    sorting.setSortingOption("releaseDate");
+    expect(sorting.getSortingOption()).to.equal("releaseDate");
+  });
 });

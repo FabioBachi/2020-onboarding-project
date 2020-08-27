@@ -14,10 +14,26 @@ export default class Movies extends Core {
   foundLastPage: boolean = false;
 
   /**
-   * Used to build a valid TMDb Movie Discovery URL, based on the genres and sorting options that the user selected.
+   * Used to build a valid TMDb Movie Discovery URL, based on the sorting options that the user selected.
    * @return {string} A URL to use in the API request.
    */
   getFetchUrl(): string {
+    // Gets the selected sorting option.
+    const sortBy: string = this.sorting.transformSortingOption(
+      this.sorting.getSortingOption()
+    );
+
+    const endpoint: string =
+      sortBy === "trending" ? "/trending/movie/day" : "/discover/movie";
+
+    return `${tmdb.baseUrl}${endpoint}`;
+  }
+
+  /**
+   * Returns an object representing the API params
+   * @return Record<string, string | number> API params.
+   */
+  getFetchParams(): Record<string, string | number> {
     // Loads all selected genres from local storage.
     const genres: string = this.genres
       .getSelectedGenres()
@@ -35,18 +51,18 @@ export default class Movies extends Core {
     // Creating all parameters that will be in the URL.
     // Using array syntax for better readability.
     // The Trending Movies endpoint does not accept any kind of params or filters but pagination.
-    const params: Array<string> =
+    const params: Record<string, string | number> =
       sortBy !== "trending"
-        ? [
-            `sort_by=${sortBy}`,
-            `with_genres=${genres}`,
-            `primary_release_date.lte=${moment().format("YYYY-MM-DD")}`,
-            "vote_count.gte=500",
-          ]
-        : [];
-    params.push(`page=${this.currentPage}`);
+        ? {
+            sort_by: `${sortBy}`,
+            with_genres: `${genres}`,
+            primary_release_date: `lte=${moment().format("YYYY-MM-DD")}`,
+            vote_count: "gte=500",
+          }
+        : {};
+    params.page = this.currentPage;
 
-    return `${tmdb.baseUrl}${endpoint}?api_key=${tmdb.key}&${params.join("&")}`;
+    return params;
   }
 
   /**
@@ -63,7 +79,7 @@ export default class Movies extends Core {
 
     return new Promise<Array<Movie>>(async (resolve, reject) => {
       (await this.getApi())
-        .get(this.getFetchUrl())
+        .get(this.getFetchUrl(), this.getFetchParams())
         .then((response) => {
           if (
             response.data !== undefined &&

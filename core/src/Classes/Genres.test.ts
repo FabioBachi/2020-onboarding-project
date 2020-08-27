@@ -1,43 +1,58 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+import { expect } from "chai";
+import moxios from "moxios";
+import sinon from "sinon";
 
 import Genres from "./Genres";
-const genres = new Genres();
 
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-mockedAxios.create.mockReturnValue(mockedAxios);
+describe("Genres", () => {
+  let axiosInstance: AxiosInstance;
+  let genres: Genres;
 
-it("should fetch a movie list", async () => {
-  mockedAxios.get.mockResolvedValue({
-    data: {
-      genres: [
-        {
-          id: 1,
-          name: "Horror",
-        },
-      ],
-    },
+  before(() => {
+    genres = new Genres();
+
+    axiosInstance = axios.create();
+    moxios.install(axiosInstance);
+
+    sinon.stub(axios, "create").returns(axiosInstance);
   });
 
-  const list = await genres.fetchGenres();
-  expect(list.length).toBeGreaterThan(0);
-  expect(list[0].name).toBe("Horror");
-});
+  after(() => {
+    sinon.restore();
+    moxios.uninstall(axiosInstance);
+  });
 
-it("should return a empty list", () => {
-  const list = genres.getSelectedGenres();
-  expect(list).toBeDefined();
-  expect(list.length).toBe(0);
-});
+  it("should fetch the genres list", async () => {
+    moxios.stubRequest(/genre\/movie/, {
+      status: 200,
+      response: {
+        genres: [
+          {
+            id: 1,
+            name: "Horror",
+          },
+        ],
+      },
+    });
 
-it("should add a genre", () => {
-  const list = genres.toggleGenre({ id: 1, name: "Genre name" });
-  expect(list).toBeDefined();
-  expect(list.length).toBe(1);
-});
+    const list = await genres.fetchGenres();
+    expect(list.length).to.be.greaterThan(0);
+    expect(list[0].name).to.be.equal("Horror");
+  });
 
-it("should remove a genre", () => {
-  const list = genres.toggleGenre({ id: 1, name: "Genre name" });
-  expect(list).toBeDefined();
-  expect(list.length).toBe(0);
+  it("should return a empty list of selected genres", () => {
+    const list = genres.getSelectedGenres();
+    expect(list.length).to.be.equal(0);
+  });
+
+  it("should add a genre", () => {
+    const list = genres.toggleGenre({ id: 1, name: "Genre name" });
+    expect(list.length).to.be.equal(1);
+  });
+
+  it("should remove a genre", () => {
+    const list = genres.toggleGenre({ id: 1, name: "Genre name" });
+    expect(list.length).to.be.equal(0);
+  });
 });
