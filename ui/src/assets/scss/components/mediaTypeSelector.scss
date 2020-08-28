@@ -1,0 +1,33 @@
+@import 'react-toggle/style';
+
+#media-type-selector {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .label {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 10px;
+  }
+  .react-toggle {
+    &:hover {
+      &:not(.react-toggle--checked) .react-toggle-track {
+        background-color: $movieColor;
+      }
+      &.react-toggle--checked .react-toggle-track {
+        background-color: $tvSeriesColor;
+      }
+    }
+    .react-toggle-track {
+      background-color: $movieColor;
+    }
+    &.react-toggle--checked .react-toggle-track {
+      background-color: $tvSeriesColor;
+    }
+    .react-toggle-thumb {
+      box-shadow: none !important;
+    }
+  }
+}

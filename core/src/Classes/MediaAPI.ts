@@ -1,65 +1,75 @@
 import moment from "moment";
 
 import Core from "./Core";
+import { MediaType } from "../Types/MediaType";
 import tmdb from "../Utils/tmdb";
 
-import Genres from "./Genres";
-import Sorting from "./Sorting";
+import GenresAPI from "./GenresAPI";
+import SortingAPI from "./SortingAPI";
 
-export default class Movies extends Core {
-  genres: Genres = new Genres();
-  sorting: Sorting = new Sorting();
+export default class MediaAPI extends Core {
+  genres: GenresAPI = new GenresAPI();
+  sorting: SortingAPI = new SortingAPI();
 
   currentPage: number = 1;
   foundLastPage: boolean = false;
 
   /**
    * Used to build a valid TMDb Movie Discovery URL, based on the sorting options that the user selected.
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @return {string} A URL to use in the API request.
    */
-  getFetchUrl(): string {
+  getFetchUrl(type: MediaType): string {
     // Gets the selected sorting option.
     const sortBy: string = this.sorting.transformSortingOption(
-      this.sorting.getSortingOption()
+      this.sorting.getSortingOption(),
+      type
     );
 
     const endpoint: string =
-      sortBy === "trending" ? "/trending/movie/day" : "/discover/movie";
+      sortBy === "trending" ? `/trending/${type}/day` : `/discover/${type}`;
 
     return `${tmdb.baseUrl}${endpoint}`;
   }
 
   /**
    * Returns an object representing the API params
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @return Record<string, string | number> API params.
    */
-  getFetchParams(): Record<string, string | number> {
+  getFetchParams(type: MediaType): Record<string, string | number> {
     // Loads all selected genres from local storage.
     const genres: string = this.genres
-      .getSelectedGenres()
+      .getSelectedGenres(type)
       .map((genre: Genre) => genre.id)
       .join(",");
 
     // Gets the selected sorting option.
     const sortBy: string = this.sorting.transformSortingOption(
-      this.sorting.getSortingOption()
+      this.sorting.getSortingOption(),
+      type
     );
-
-    const endpoint: string =
-      sortBy === "trending" ? "/trending/movie/day" : "/discover/movie";
 
     // Creating all parameters that will be in the URL.
     // Using array syntax for better readability.
     // The Trending Movies endpoint does not accept any kind of params or filters but pagination.
-    const params: Record<string, string | number> =
-      sortBy !== "trending"
-        ? {
-            sort_by: `${sortBy}`,
-            with_genres: `${genres}`,
-            primary_release_date: `lte=${moment().format("YYYY-MM-DD")}`,
-            vote_count: "gte=500",
-          }
-        : {};
+    let params: Record<string, string | number> = {};
+    if (sortBy !== "trending") {
+      params = {
+        sort_by: `${sortBy}`,
+        with_genres: `${genres}`,
+        "vote_count.gte": "500",
+      };
+
+      if (type === MediaType.Movie) {
+        params = {
+          ...params,
+          "primary_release_date.lte": `${moment().format("YYYY-MM-DD")}`,
+        };
+      }
+    }
+
+    params.api_key = tmdb.key;
     params.page = this.currentPage;
 
     return params;
@@ -67,19 +77,23 @@ export default class Movies extends Core {
 
   /**
    * Fetches movie search results from the TMDb's API.
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @param {boolean} resetPagination If it is a new search, resetPagination can be used to reset the currentPage to 1.
-   * @return {Promise<Array<Movie>>} A promise with a list of movies as its result.
+   * @return {Promise<Array<Media>>} A promise with a list of movies as its result.
    */
-  async fetchMovies(resetPagination: boolean): Promise<Array<Movie>> {
+  async fetchMedia(
+    type: MediaType,
+    resetPagination: boolean
+  ): Promise<Array<Media>> {
     if (resetPagination) {
       this.setCurrentPage(1);
     } else {
       this.setCurrentPage(this.currentPage + 1);
     }
 
-    return new Promise<Array<Movie>>(async (resolve, reject) => {
+    return new Promise<Array<Media>>(async (resolve, reject) => {
       (await this.getApi())
-        .get(this.getFetchUrl(), this.getFetchParams())
+        .get(this.getFetchUrl(type), { params: this.getFetchParams(type) })
         .then((response) => {
           if (
             response.data !== undefined &&
@@ -96,7 +110,7 @@ export default class Movies extends Core {
                 : null,
               releaseDate: moment(movie.release_date).format("DD/MM/YYYY"),
               title: movie.title,
-              url: `https://www.themoviedb.org/movie/${movie.id}`,
+              url: `https://www.themoviedb.org/${type}/${movie.id}`,
               voteAverage: movie.vote_average,
             }));
 
@@ -123,13 +137,14 @@ export default class Movies extends Core {
 
   /**
    * Fetches a list of videos from the API, but returns only one, giving priority to trailers. If no trailer is found, it returns the first video from the list.
-   * @param {number} movieId
+   * @param {number} mediaId
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @return {Promise<Movie>} A promise with a Video object.
    */
-  async fetchMainVideo(movieId: number): Promise<Video> {
+  async fetchMainVideo(mediaId: number, type: MediaType): Promise<Video> {
     return new Promise<Video>(async (resolve, reject) => {
       (await this.getApi())
-        .get(`${tmdb.baseUrl}/movie/${movieId}/videos?api_key=${tmdb.key}`)
+        .get(`${tmdb.baseUrl}/${type}/${mediaId}/videos?api_key=${tmdb.key}`)
         .then((response) => {
           if (
             response.data !== undefined &&

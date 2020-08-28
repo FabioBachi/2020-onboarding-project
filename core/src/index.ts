@@ -1,9 +1,11 @@
-import GenresLib from "./Classes/Genres";
-import MoviesLib from "./Classes/Movies";
-import SortingLib from "./Classes/Sorting";
+import GenresAPI from "./Classes/GenresAPI";
+import MediaAPI from "./Classes/MediaAPI";
+import { MediaType as Types } from "./Types/MediaType";
+import SortingAPI from "./Classes/SortingAPI";
 
-const Genres = new GenresLib();
-const Movies = new MoviesLib();
-const Sorting = new SortingLib();
+const Genres = new GenresAPI();
+const Media = new MediaAPI();
+const MediaType = { TV: Types.TV, Movie: Types.Movie };
+const Sorting = new SortingAPI();
 
-export { Genres, Movies, Sorting };
+export { Genres, Media, MediaType, Sorting };

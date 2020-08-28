@@ -4,15 +4,15 @@ import * as ReactDOM from 'react-dom';
 import App from './index.production';
 import * as styles from './assets/scss/main.scss';
 
-export default class MovieSuggestionElement extends HTMLElement {
+export default class MediaSuggestionElement extends HTMLElement {
   static get observedAttributes() {
-    return ['genres', 'movies', 'selected-genres', 'selected-sorting'];
+    return ['genres', 'media', 'selected-genres', 'selected-sorting'];
   }
 
   attributeChangedCallback(param, oldValue, newValue) {
     switch (param) {
       case 'genres':
-      case 'movies':
+      case 'media':
         this[param] = JSON.parse(newValue);
         break;
       case 'selected-genres':
@@ -46,7 +46,7 @@ export default class MovieSuggestionElement extends HTMLElement {
         App,
         {
           genres: this.genres || [],
-          movies: this.movies || [],
+          media: this.media || [],
           selectedGenres: this.selectedGenres || [],
           selectedSorting: this.selectedSorting || 'voteAverage',
         },
@@ -57,4 +57,4 @@ export default class MovieSuggestionElement extends HTMLElement {
   }
 }
 
-window.customElements.define('movie-suggestion', MovieSuggestionElement);
+window.customElements.define('media-suggestion', MediaSuggestionElement);

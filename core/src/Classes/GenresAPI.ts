@@ -1,17 +1,17 @@
-import axios from "axios";
-
 import Core from "./Core";
 import tmdb from "../Utils/tmdb";
+import { MediaType } from "../Types/MediaType";
 
-export default class Genres extends Core {
+export default class GenresAPI extends Core {
   /**
    * Fetches a genre list from the API.
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @return {Array<Genre>} A list of all TMDb's genres.
    */
-  async fetchGenres(): Promise<Array<Genre>> {
+  async fetchGenres(type: MediaType): Promise<Array<Genre>> {
     return new Promise<Array<Genre>>(async (resolve, reject) => {
       (await this.getApi())
-        .get(`${tmdb.baseUrl}/genre/movie/list`, {
+        .get(`${tmdb.baseUrl}/genre/${type}/list`, {
           params: { api_key: tmdb.key },
         })
         .then((response) => {
@@ -36,10 +36,11 @@ export default class Genres extends Core {
 
   /**
    * Returns a list of favorite genres previously stored when the user manually selected them.
+   * @param {MediaType} type To fetch either TV or movie genres.
    * @return {Array<Genre>} The list of selected genres.
    */
-  getSelectedGenres(): Array<Genre> {
-    const storedGenres: string | null = localStorage.getItem("genres");
+  getSelectedGenres(type: MediaType): Array<Genre> {
+    const storedGenres: string | null = localStorage.getItem(`${type}-genres`);
     return storedGenres ? JSON.parse(storedGenres) : [];
   }
 
@@ -48,8 +49,8 @@ export default class Genres extends Core {
    * @param {Genre} genre The genre that must be added/removed from the local storage.
    * @return {Array<Genre>} The list of selected genres.
    */
-  toggleGenre(genre: Genre): Array<Genre> {
-    let genres: Array<Genre> = this.getSelectedGenres();
+  toggleGenre(genre: Genre, type: MediaType): Array<Genre> {
+    let genres: Array<Genre> = this.getSelectedGenres(type);
 
     // Toggling: if it is in the local storage, remove it. Otherwise, add it.
     if (genres.find((g) => g.id == genre.id)) {
@@ -58,7 +59,7 @@ export default class Genres extends Core {
       genres.push(genre);
     }
 
-    localStorage.setItem("genres", JSON.stringify(genres));
+    localStorage.setItem(`${type}-genres`, JSON.stringify(genres));
 
     return genres;
   }

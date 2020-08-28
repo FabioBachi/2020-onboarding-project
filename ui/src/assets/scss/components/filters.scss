@@ -48,21 +48,41 @@
           outline: 0;
         }
         &:hover {
-          border-color: $primaryColor;
+          border-color: var(--primaryColor);
         }
         &.selected {
-          background-color: $primaryColor;
-          border-color: $primaryColor;
+          background-color: var(--primaryColor);
+          border-color: var(--primaryColor);
         }
       }
     }
   }
   select {
+    background-image: linear-gradient(
+        45deg,
+        transparent 50%,
+        var(--primaryColor) 50%
+      ),
+      linear-gradient(135deg, var(--primaryColor) 50%, transparent 50%),
+      linear-gradient(to right, transparent, transparent);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
     background-color: transparent;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-repeat: no-repeat;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+
     border: none;
-    color: $primaryColor;
+    color: var(--primaryColor);
     font-size: 18px;
-    padding: 5px 0;
+    height: 45px;
+    padding: 5px 0 5px 5px;
     margin: 0 0 0 -4px;
     width: 100%;
   }

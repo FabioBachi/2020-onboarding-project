@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ModalVideo from 'react-modal-video';
 
+import store from '../../store';
+
 type Props = {
-  movie: Movie;
+  media: Media;
 };
 
-const Movie: React.FC<Props> = ({ movie }: Props) => {
+const MediaItem: React.FC<Props> = ({ media }: Props) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [video, setVideo] = useState<Video | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
@@ -13,7 +15,9 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
   const onClickVideo = () => {
     setLoading(true);
     window.dispatchEvent(
-      new CustomEvent('onVideoDemand', { detail: { movieId: movie.id } })
+      new CustomEvent('onVideoDemand', {
+        detail: { mediaId: media.id, type: store.getState().media.mediaType },
+      })
     );
   };
 
@@ -21,7 +25,7 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
   useEffect(() => {
     // Listens to a onLoadVideo event to show it into the modal.
     window.addEventListener('onLoadVideo', (event: any) => {
-      if (event.detail.movieId === movie.id) {
+      if (event.detail.mediaId === media.id) {
         setLoading(false);
 
         if (event.detail.video) {
@@ -30,7 +34,7 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
         } else {
           window.dispatchEvent(
             new CustomEvent('onError', {
-              detail: { message: 'No video was found for this movie.' },
+              detail: { message: 'No video was found for this media.' },
             })
           );
         }
@@ -39,32 +43,32 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
   }, []);
 
   return (
-    <li className="movie-item">
-      {movie.posterPath ? (
-        <img alt={movie.title} src={movie.posterPath} />
+    <li className="media-item">
+      {media.posterPath ? (
+        <img alt={media.title} src={media.posterPath} />
       ) : (
         <span />
       )}
-      <div className="movie-info">
-        <h2>{movie.title}</h2>
-        <div className="movie-text">{`Release date: ${movie.releaseDate}`}</div>
-        <div className="movie-text">{`${movie.voteAverage}⭐`}</div>
+      <div className="media-info">
+        <h2>{media.title}</h2>
+        <div className="media-text">{`Release date: ${media.releaseDate}`}</div>
+        <div className="media-text">{`${media.voteAverage}⭐`}</div>
 
-        <div className="movie-actions">
+        <div className="media-actions">
           {!isLoading ? (
-            <button className="movie-bt" onClick={onClickVideo} type="button">
+            <button className="media-bt" onClick={onClickVideo} type="button">
               Watch trailer
             </button>
           ) : (
-            <div className="movie-trailer-loading">Loading ...</div>
+            <div className="media-trailer-loading">Loading ...</div>
           )}
           <a
-            href={movie.url}
+            href={media.url}
             target="_blank"
             rel="noreferrer"
-            className="movie-bt"
+            className="media-bt"
           >
-            Open movie
+            Open media
           </a>
         </div>
       </div>
@@ -83,4 +87,4 @@ const Movie: React.FC<Props> = ({ movie }: Props) => {
   );
 };
 
-export default Movie;
+export default MediaItem;

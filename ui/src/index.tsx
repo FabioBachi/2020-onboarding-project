@@ -2,15 +2,15 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import MovieSuggestion from './MovieSuggestion';
+import MediaSuggestion from './MediaSuggestion';
 import store from './store';
-import { Creators } from './store/ducks/movies';
+import { toggleLoading } from './store/ducks/media';
 
-store.dispatch(Creators.toggleLoading(false));
+store.dispatch(toggleLoading(false));
 
 render(
   <Provider store={store}>
-    <MovieSuggestion
+    <MediaSuggestion
       genres={[
         {
           id: 1,
@@ -25,7 +25,7 @@ render(
           name: 'Science Fiction',
         },
       ]}
-      movies={[
+      media={[
         {
           id: 1,
           voteAverage: 45,

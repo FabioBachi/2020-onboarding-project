@@ -1,5 +1,7 @@
+import { MediaType } from "../Types/MediaType";
+
 export default class Sorting {
-  defaultSortingOption: string = "voteAverage";
+  defaultSortingOption: string = "releaseDate";
   availableOptions: Record<string, string> = {
     releaseDate: "release_date.desc",
     trending: "trending",
@@ -18,10 +20,18 @@ export default class Sorting {
   /**
    * Transforms an "application sorting option" to the API sorting option.
    * @param {string} option The new sorting option.
+   * @param {MediaType} type To return according sorting option.
    * @return {string} A sorting option that can be used by the API.
    */
-  transformSortingOption(option: string): string {
-    return this.availableOptions[option] || this.defaultSortingOption;
+  transformSortingOption(option: string, type: MediaType): string {
+    let transformedOption =
+      this.availableOptions[option] || this.defaultSortingOption;
+
+    if (type === MediaType.TV && option === "releaseDate") {
+      transformedOption = "first_air_date.desc";
+    }
+
+    return transformedOption;
   }
 
   /**

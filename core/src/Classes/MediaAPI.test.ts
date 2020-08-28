@@ -3,21 +3,22 @@ import { expect } from "chai";
 import moxios from "moxios";
 import sinon from "sinon";
 
-import Movies from "./Movies";
-import Genres from "./Genres";
-import Sorting from "./Sorting";
+import MediaAPI from "./MediaAPI";
+import GenresAPI from "./GenresAPI";
+import { MediaType } from "../Types/MediaType";
+import SortingAPI from "./SortingAPI";
 import tmdb from "../Utils/tmdb";
 
-describe("Movies", () => {
+describe("Media", () => {
   let axiosInstance: AxiosInstance;
-  let genres: Genres;
-  let movies: Movies;
-  let sorting: Sorting;
+  let genres: GenresAPI;
+  let movies: MediaAPI;
+  let sorting: SortingAPI;
 
   before(() => {
-    genres = new Genres();
-    movies = new Movies();
-    sorting = new Sorting();
+    genres = new GenresAPI();
+    movies = new MediaAPI();
+    sorting = new SortingAPI();
 
     axiosInstance = axios.create();
     moxios.install(axiosInstance);
@@ -31,9 +32,9 @@ describe("Movies", () => {
   });
 
   it("should return a valid TMDb url", () => {
-    genres.toggleGenre({ id: 27, name: "Horror" });
+    genres.toggleGenre({ id: 27, name: "Horror" }, MediaType.Movie);
 
-    expect(movies.getFetchUrl()).to.contain(tmdb.baseUrl);
+    expect(movies.getFetchUrl(MediaType.Movie)).to.contain(tmdb.baseUrl);
   });
 
   it("should change the current page number", () => {
@@ -59,7 +60,7 @@ describe("Movies", () => {
       },
     });
 
-    const list = await movies.fetchMovies(true);
+    const list: Array<Media> = await movies.fetchMedia(MediaType.Movie, true);
     expect(list.length).to.be.greaterThan(0);
     expect(list[0].title).to.be.equal("Blade Runner 2049");
   });
@@ -83,7 +84,7 @@ describe("Movies", () => {
       },
     });
 
-    const video: Video = await movies.fetchMainVideo(1);
+    const video: Video = await movies.fetchMainVideo(1, MediaType.Movie);
     expect(video.id).to.be.equal("533ec654c3a36854480003eb");
   });
 });

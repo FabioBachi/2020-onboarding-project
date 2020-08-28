@@ -3,17 +3,17 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 
 import store from '../../store';
-import { Creators } from '../../store/ducks/movies';
-import Movie from './Movie';
-import MoviesList from './MoviesList';
+import { toggleLoading } from '../../store/ducks/media';
+import MediaItem from './MediaItem';
+import MediaList from './MediaList';
 
-it('should have 2 movies in the list', () => {
-  store.dispatch(Creators.toggleLoading(false));
+it('should have 2 medias in the list', () => {
+  store.dispatch(toggleLoading(false));
 
   const wrapper = mount(
     <Provider store={store}>
-      <MoviesList
-        movies={[
+      <MediaList
+        media={[
           {
             id: 1,
             voteAverage: 45,
@@ -37,15 +37,15 @@ it('should have 2 movies in the list', () => {
     </Provider>
   );
 
-  expect(wrapper.find(Movie).length).toBe(2);
+  expect(wrapper.find(MediaItem).length).toBe(2);
 });
 
-it('should warn that are no movies to show', () => {
-  store.dispatch(Creators.toggleLoading(false));
+it('should warn that are no medias to show', () => {
+  store.dispatch(toggleLoading(false));
 
   const wrapper = mount(
     <Provider store={store}>
-      <MoviesList movies={[]} />
+      <MediaList media={[]} />
     </Provider>
   );
 

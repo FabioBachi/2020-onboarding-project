@@ -1,4 +1,4 @@
-#movies-list {
+#media-list {
   align-items: stretch;
   display: flex;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
   margin: 0;
   padding: 0;
 
-  .movie-item {
+  .media-item {
     background-color: $darkGrey;
     border-radius: 5px;
     box-sizing: border-box;
@@ -25,20 +25,20 @@
     &:nth-child(4n) {
       margin-right: 0;
     }
-    .movie-loading {
+    .media-loading {
       position: absolute;
     }
     img,
-    .movie-poster-loading {
+    .media-poster-loading {
       left: 0;
       position: absolute;
       top: 0;
       width: 100%;
     }
-    .movie-poster-loading {
+    .media-poster-loading {
       height: 68%;
     }
-    .movie-info {
+    .media-info {
       background-color: $darkGrey;
       bottom: 0;
       box-sizing: border-box;
@@ -48,7 +48,7 @@
       width: 100%;
 
       h2 {
-        color: $primaryColor;
+        color: var(--primaryColor);
         font-size: 21px;
         font-weight: bold;
         margin: 0 0 5px;
@@ -59,7 +59,7 @@
           width: 80% !important;
         }
       }
-      .movie-text {
+      .media-text {
         color: white;
         font-size: 12px;
 
@@ -68,12 +68,12 @@
           margin-top: 10px !important;
         }
       }
-      .movie-actions {
+      .media-actions {
         align-items: flex-start;
         display: flex;
         margin-top: 25px;
 
-        .movie-bt {
+        .media-bt {
           background-color: #999;
           border: 0 none;
           border-radius: 10px;
@@ -92,13 +92,13 @@
             color: $darkGrey;
           }
         }
-        button.movie-bt {
-          background-color: $primaryColor;
+        button.media-bt {
+          background-color: var(--primaryColor);
           margin-right: 5px;
           outline: none;
         }
-        .movie-trailer-loading {
-          color: $primaryColor;
+        .media-trailer-loading {
+          color: var(--primaryColor);
           font-size: 15px;
           margin-right: 10px;
         }

@@ -5,12 +5,19 @@ body {
   font-family: Calibri, Arial;
   margin: 0;
 }
-#movie-suggestion {
+#media-suggestion {
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1320px;
   padding: 20px;
   width: 100%;
+
+  &.movie {
+    --primaryColor: #{$movieColor};
+  }
+  &.tv {
+    --primaryColor: #{$tvSeriesColor};
+  }
 }
 .loading,
 .no-items {
@@ -25,6 +32,7 @@ body {
 @import 'components/dialog.scss';
 @import 'components/filters.scss';
 @import 'components/header.scss';
-@import 'components/movies.scss';
+@import 'components/media.scss';
+@import 'components/mediaTypeSelector.scss';
 
 @import 'node_modules/react-modal-video/scss/modal-video.scss';

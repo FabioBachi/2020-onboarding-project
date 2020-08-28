@@ -1,3 +1,3 @@
 interface StoreState {
-  movies: MovieActionPayload;
+  media: MediaActionPayload;
 }

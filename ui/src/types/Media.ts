@@ -1,4 +1,4 @@
-interface Movie {
+interface Media {
   id: number;
   posterPath: string;
   releaseDate: string;

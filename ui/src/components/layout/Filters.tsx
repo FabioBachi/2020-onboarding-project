@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Creators } from '../../store/ducks/movies';
+import { changeSorting, toggleLoading } from '../../store/ducks/media';
 
 import Genres from '../filters/Genres';
 import Sort from '../filters/Sort';
@@ -13,8 +13,8 @@ interface FiltersProps {
 }
 
 const mapDispatchToProps = {
-  changeSorting: Creators.changeSorting,
-  toggleLoading: Creators.toggleLoading,
+  changeSorting,
+  toggleLoading,
 };
 
 type Props = FiltersProps & typeof mapDispatchToProps;
@@ -53,8 +53,8 @@ const Filters: React.FC<Props> = ({
 
 Filters.defaultProps = { selectedGenres: [], selectedSorting: undefined };
 
-const mapStateToProps = ({ movies }: StoreState) => ({
-  selectedSorting: movies.selectedSorting,
+const mapStateToProps = ({ media }: StoreState) => ({
+  selectedSorting: media.selectedSorting,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);

@@ -1,5 +1,15 @@
-import { combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import logger from 'redux-logger';
 
-import movies from './ducks/movies';
+import media from './ducks/media';
 
-export default createStore(combineReducers({ movies }));
+const middlewares = [];
+
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger);
+}
+
+export default createStore(
+  combineReducers({ media }),
+  applyMiddleware(...middlewares)
+);

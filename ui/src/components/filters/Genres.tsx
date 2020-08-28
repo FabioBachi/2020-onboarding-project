@@ -3,7 +3,8 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import GenreButton from '../layout/GenreButton';
-import { Creators } from '../../store/ducks/movies';
+import store from '../../store';
+import { toggleLoading } from '../../store/ducks/media';
 
 interface GenresProps {
   genres: Genre[];
@@ -11,7 +12,7 @@ interface GenresProps {
   selectedSorting?: string;
 }
 
-const mapDispatchToProps = { toggleLoading: Creators.toggleLoading };
+const mapDispatchToProps = { toggleLoading };
 
 type Props = GenresProps & typeof mapDispatchToProps;
 
@@ -23,7 +24,9 @@ const Genres: React.FC<Props> = ({
 }: Props) => {
   const onToggleGenre: Function = (genre: Genre): void => {
     window.dispatchEvent(
-      new CustomEvent('onToggleGenre', { detail: { genre } })
+      new CustomEvent('onToggleGenre', {
+        detail: { genre, type: store.getState().media.mediaType },
+      })
     );
 
     props.toggleLoading(true);
@@ -59,7 +62,7 @@ const Genres: React.FC<Props> = ({
           </div>
         </>
       ) : (
-        <div className="no-items">No movie genres found.</div>
+        <div className="no-items">No genres found.</div>
       )}
     </div>
   );

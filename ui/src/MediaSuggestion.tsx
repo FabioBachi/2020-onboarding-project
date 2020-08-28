@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { AlertDialog } from '@arterial/dialog';
 import { connect } from 'react-redux';
 
@@ -6,40 +7,43 @@ import './assets/scss/main.scss';
 
 import Filters from './components/layout/Filters';
 import Header from './components/layout/Header';
-import MoviesList from './components/movies/MoviesList';
-import { Creators } from './store/ducks/movies';
+import MediaList from './components/media/MediaList';
+import { changeSorting, toggleLoading } from './store/ducks/media';
+import { MediaType } from './types/MediaType';
 
-interface MovieProps {
+interface MediaProps {
   genres: Genre[];
-  movies: Movie[];
+  media: Media[];
+  mediaType?: string;
   selectedGenres: number[];
   selectedSorting: string;
 }
 
 const mapDispatchToProps = {
-  changeSorting: Creators.changeSorting,
-  toggleLoading: Creators.toggleLoading,
+  changeSorting,
+  toggleLoading,
 };
 
-type Props = MovieProps & typeof mapDispatchToProps;
+type Props = MediaProps & typeof mapDispatchToProps;
 
-const MovieSuggestion: React.FC<Props> = ({
+const MediaSuggestion: React.FC<Props> = ({
   genres,
-  movies: moviesProps,
+  media: mediaProps,
+  mediaType,
   selectedGenres,
   selectedSorting,
   ...props
 }: Props) => {
   const [error, setError] = useState<string | null>(null);
-  const [movies, setMovies] = useState<Array<Movie>>(moviesProps);
+  const [media, setMedia] = useState<Array<Media>>(mediaProps);
 
   // Executed only once
   useEffect(() => {
     props.changeSorting(selectedSorting);
 
-    // Listens to a onLoadMovies event to show them into the UI.
-    window.addEventListener('onLoadMovies', (event: any) => {
-      setMovies(event.detail.movies);
+    // Listens to a onLoadMedia event to show them into the UI.
+    window.addEventListener('onLoadMedia', (event: any) => {
+      setMedia(event.detail.media);
       props.toggleLoading(false);
     });
 
@@ -55,10 +59,16 @@ const MovieSuggestion: React.FC<Props> = ({
   }, []);
 
   return (
-    <div id="movie-suggestion">
+    <div
+      id="media-suggestion"
+      className={classNames({
+        movie: mediaType === MediaType.Movie,
+        tv: mediaType === MediaType.TV,
+      })}
+    >
       <Header />
       <Filters genres={genres} selectedGenres={selectedGenres} />
-      <MoviesList movies={movies} />
+      <MediaList media={media} />
 
       <AlertDialog
         title="Ops, something went wrong."
@@ -71,4 +81,8 @@ const MovieSuggestion: React.FC<Props> = ({
   );
 };
 
-export default connect(undefined, mapDispatchToProps)(MovieSuggestion);
+const mapStateToProps = ({ media }: StoreState) => ({
+  mediaType: media.mediaType,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MediaSuggestion);

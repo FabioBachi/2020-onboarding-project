@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import Sorting from "./Sorting";
+import SortingAPI from "./SortingAPI";
 
 describe("Sorting", function () {
-  let sorting: Sorting;
+  let sorting: SortingAPI;
 
   before(() => {
-    sorting = new Sorting();
+    sorting = new SortingAPI();
   });
 
   it("should return the default sorting option", function () {

@@ -62,14 +62,14 @@
   text-align: center;
 
   .mdc-dialog__title {
-    color: $primaryColor;
+    color: var(--primaryColor);
     margin: 0 0 10px 0;
   }
   .mdc-dialog__actions {
     margin-top: 20px;
 
     button {
-      background-color: $primaryColor;
+      background-color: var(--primaryColor);
       border: 0 none;
       border-radius: 50px;
       color: white;

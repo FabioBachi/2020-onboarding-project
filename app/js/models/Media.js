@@ -1,5 +1,5 @@
 define(["backbone"], function (Backbone) {
-  const Movie = Backbone.Model.extend({
+  const Media = Backbone.Model.extend({
     defaults: {
       id: null,
       posterPath: null,
@@ -10,5 +10,5 @@ define(["backbone"], function (Backbone) {
     },
   });
 
-  return Movie;
+  return Media;
 });
