@@ -109,7 +109,7 @@ export default class MediaAPI extends Core {
             const movies = response.data.results.map((movie: any) => ({
               id: movie.id,
               posterPath: movie.poster_path
-                ? `http://image.tmdb.org/t/p/w500${movie.poster_path}`
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                 : null,
               releaseDate: moment(movie.release_date).format("DD/MM/YYYY"),
               title: movie.title,
