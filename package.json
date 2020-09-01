@@ -22,5 +22,7 @@
     "grunt-contrib-uglify": "^5.0.0",
     "grunt-run": "^0.8.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
 }
