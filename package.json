@@ -5,6 +5,10 @@
   "repository": "git@github.com:fbachi/2020-onboarding-project.git",
   "author": "Fábio Bachi <fabio.bachi@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "grunt",
+    "start": "cd dist/app && http-server"
+  },
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
@@ -16,5 +20,7 @@
     "grunt-contrib-uglify": "^5.0.0",
     "grunt-run": "^0.8.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
 }

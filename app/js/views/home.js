@@ -67,8 +67,6 @@ define([
        */
       paginate: async function () {
         if (!Core.Media.foundLastPage) {
-          this.page++;
-
           await Core.Media.fetchMedia(this.mediaType, false)
             .then((response) => {
               media.reset([...this.media.toJSON(), ...response]);

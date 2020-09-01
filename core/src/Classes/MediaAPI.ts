@@ -53,9 +53,14 @@ export default class MediaAPI extends Core {
     // Creating all parameters that will be in the URL.
     // Using array syntax for better readability.
     // The Trending Movies endpoint does not accept any kind of params or filters but pagination.
-    let params: Record<string, string | number> = {};
+    let params: Record<string, string | number> = {
+      api_key: tmdb.key,
+      page: this.currentPage,
+    };
     if (sortBy !== "trending") {
       params = {
+        ...params,
+
         sort_by: `${sortBy}`,
         with_genres: `${genres}`,
         "vote_count.gte": "500",
@@ -64,13 +69,11 @@ export default class MediaAPI extends Core {
       if (type === MediaType.Movie) {
         params = {
           ...params,
+
           "primary_release_date.lte": `${moment().format("YYYY-MM-DD")}`,
         };
       }
     }
-
-    params.api_key = tmdb.key;
-    params.page = this.currentPage;
 
     return params;
   }
@@ -79,7 +82,7 @@ export default class MediaAPI extends Core {
    * Fetches movie search results from the TMDb's API.
    * @param {MediaType} type To fetch either TV or movie genres.
    * @param {boolean} resetPagination If it is a new search, resetPagination can be used to reset the currentPage to 1.
-   * @return {Promise<Array<Media>>} A promise with a list of movies as its result.
+   * @return {Promise<Array<Media>>} A promise with a list of media as its result.
    */
   async fetchMedia(
     type: MediaType,
